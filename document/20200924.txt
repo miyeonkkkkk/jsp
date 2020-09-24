@@ -1,0 +1,16 @@
+- 웹브라우저를 가져오는 방법
+
+1. 웹 브라우저 주소줄에 주소 입력 + enter => get
+2. 버튼 : form - get
+           form - post
+3. link - get
+
+HTTP method : get, post
+=> service()에 의해 method 방식을 나누어 호출한다.
+
+get 방식은 body 영역이 존재하지 않는다.
+url에 값을 담아 가져간다.
+
+post 방식은 body 영역에 값을 숨겨서 가져간다.
+
+
