@@ -10,7 +10,8 @@
 </head>
 <body>
 	<% request.setCharacterEncoding("utf-8"); %>
-	<h1>GET</h1>
+	<!-- <h1>GET</h1> -->
+	<h1><%=request.getMethod()%></h1>
 	<p>user_id 파라미터는 id1, id2 두 개를 보내지만 getParameter를 호출하면 첫번째 파라미터 값을 반환한다.</p>
 	<p>request.getParameter("user_id") : <%=request.getParameter("user_id")%></p>
 	<hr>

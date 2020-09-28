@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 
 <script>
-	$(function() {
+	$(function() { // body보다 먼저 실행 -> 위에서부터 읽어오기 때문에 존재하지 않기 때문에 넣어준다.
 		$('.r1').on('change', function() {
 			vmethod = $('input[type=radio]:checked').val()
 			console.log(vmethod)
