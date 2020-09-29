@@ -7,9 +7,9 @@
 	<artifactId>jsp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	
+
 	<properties>
-		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>	
+		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 	</properties>
 
 	<build>
@@ -41,6 +41,14 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
 
 	</dependencies>
 
