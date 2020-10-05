@@ -27,6 +27,7 @@ public class RedirectServlet extends HttpServlet {
 		
 //		System.out.println("redirectServlet.doGet()");
 		// 문자열 결합만 조심하자!!
+		// if문으로 처리하였었다. if(로깅레벨>문자열)
 //		logger.debug("redirectServlet {}", "doGet()"); 이런식으로 문자열 결합을 피한다.
 		logger.debug("redirectServlet.doGet()");
 		
