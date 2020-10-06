@@ -21,11 +21,18 @@
     <link href="<%=request.getContextPath()%>/css/signin.css" rel="stylesheet">
     
     <script>
-	function getCookieValue(){
-		var cookies = document.cookie.split("; ")
-		var cookie1 = cookies[0].split("=")
+	function getCookieValue(cookieName){
+		var cookies = document.cookie.split("; ") // 쿠키를 나누고
 		
-		
+		for(i=0; i<cookies.length; i++) {
+			var cookie = cookies[i].split("="); // 쿠키 하나를 쪼개고
+			if(cookie[0] == cookieName) {
+				var cookieValue = cookie[1];
+				console.log(cookieValue);
+				return cookieValue;
+			}
+		}
+		return "";
 		
 		<%-- <%
 			Cookie[] cookies = request.getCookies();
@@ -39,6 +46,7 @@
 			}
 		%> --%>
 	}
+
         
     </script>
 
