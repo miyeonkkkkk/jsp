@@ -7,7 +7,7 @@ import org.junit.Test;
 public class CookieTest {
 
 	@Test
-	public void getCookieValueTest() {
+	public void getCookieValueSuccessTest() {
 		
 		/***Given : 주어진 상황 기술 ***/
 		CookieSplit cookieSplit = new CookieSplit();
@@ -21,7 +21,7 @@ public class CookieTest {
 	}
 	
 	@Test
-	public void getCookieValueTeste() {
+	public void getCookieValueFailTeste() {
 		
 		/***Given : 주어진 상황 기술 ***/
 		CookieSplit cookieSplit = new CookieSplit();
