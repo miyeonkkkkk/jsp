@@ -13,14 +13,14 @@
 
     <title>Signin Template for Bootstrap</title>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/js.cookie-2.2.1.min.js"></script>
+
     <!-- Bootstrap core CSS -->
     <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="<%=request.getContextPath()%>/css/signin.css" rel="stylesheet">
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/js.cookie-2.2.1.min.js"></script>
     
     <script>
     // 쿠키 조회 메소드
@@ -82,13 +82,14 @@
 				Cookies.set('USERID', $('#inputEmail').val());
 				
 				// 4. form 태그에 대한 submit 처리
-				$('#ff').submit();
 
 			}else{ // 4. Remember me 체크 박스가 체크 안되어 있으면
 				// 5. REMEMBERME, USERID 쿠키를 삭제
 				Cookies.remove('REMEMBERME');
 				Cookies.remove('USERID');
 			}
+			
+			$('#ff').submit();
 		})
 		
 	})
@@ -104,9 +105,9 @@
       <form class="form-signin" action="<%=request.getContextPath()%>/login" method="post" id="ff">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" name="userId" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" id="inputEmail" name="userId" class="form-control" placeholder="Email address" required autofocus value="brown">
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required value="passBrown">
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me" id="chk"> Remember me
