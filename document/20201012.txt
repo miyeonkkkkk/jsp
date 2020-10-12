@@ -1,0 +1,54 @@
+SQL 문에서 값을 지정하지 않고 따로 지정하는 이유
+- parpare와 같은 경우
+- 실행계획을 만들어야지만 실행을 할 수 있다.
+-> 이걸 재사용하는 과정에서 동일한 실행계획으로 인식하기 위해서는 문자열이 동일해야 한다.
+-> 그래서 SQL문에서 고정 문자열 사용을 하지 않는다.
+
+
+- SQL 실행 절차
+=> 공유풀에서 동일한 실행 계획이 있는지 확인
+   구문분석/실행계획 -> 
+- shared pool(실행계획을 보관) : 크기가 적당해야 한다.
+-> 크기가 크다면 그만큼 실행계획을 많이 가지고 있다는 뜻이고, 그럼 탐색 시간도 오래 걸린다.
+
+
+- SQL문 : 비절차적 언어 => 실행계획을 세워서 실행한다.
+       : 집합 개념 - 어떤 테이블 부터 읽어라
+       : 실행 계획이 존재하면 재사용한다.
+       
+==============================================================
+
+DBMS입장에서 동일한 SQL이란?
+- 모든 문자가 동일한 SQL
+
+다은 SQL은 DBMS 입장에서는 서로 다른 SQL로 인식된다.
+-> 결과는 같더라도 서로 다른 SQL문으로 인식
+-> 고정 문자열을 사용할 경우에도 다른 SQL문으로 인식
+SELECT * FROM MEMBER;
+SELECT * FROM  MEMBER;
+SELECt * FROM MEMBER; -> 대소문자를 구분한다.
+
+MemberDao 새로운 기능 추가
+- 전체 사용자 조회
+1. 메소드, sql id 이름?? ==> selectAllMember
+2. 해당 sql 실행할 때 파라미터가 필요한자??
+	SELECT *
+	  FROM MEMBER
+3. 해당 sql 실행 했을 때 반환되는 타입은 어떤건지?? ==> List<MemberVO>
+	dao, daoTest 코드 작성
+	
+	mapper, daoI, dao, daoTest
+
+- 지금까지 배운 내용을 종합하여 실습
+left 메뉴의 jobs 클릭시
+jobs 테이블에 저장된 모든 데이터를 table 태그를 이용하여 화면에 출력(job_id, job_title 두개 컬럼만 화면에 표시)
+=> servlet(Controller), service(service), dao(respository), model, view
+=> 테스트 코드 : service, dao
+
+MemberDao ==> 여기사용 금지, xxxxDao
+member.xml ==> jobs.xml ==> mybatis-config.xml
+
+
+
+
+

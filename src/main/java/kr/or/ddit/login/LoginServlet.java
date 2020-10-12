@@ -43,10 +43,10 @@ public class LoginServlet extends HttpServlet {
 		MemberVO memberVo = memberService.getMember(userId);
 		
 		// db에 등록된 회원이 없는 경우 또는 비밀번호가 틀린경우
-		if(memberVo == null || !memberVo.getPassword().equals(password)) {
+		if(memberVo == null || !memberVo.getPass().equals(password)) {
 			request.getRequestDispatcher("/login.jsp").forward(request, response);
 			
-		}else if(memberVo.getUserId().equals(userId) && memberVo.getPassword().equals(password)) { 
+		}else if(memberVo.getUserid().equals(userId) && memberVo.getPass().equals(password)) { 
 			// 회원아이디가 존재하고, 비밀번호가 일치하는 경우(메인페이지 이동)
 			request.getRequestDispatcher("/main.jsp").forward(request, response);
 			

@@ -37,7 +37,7 @@
 			   if(memberVo == null){
 				   userId = "";
 			   }else{
-				   userId = memberVo.getUserId();
+				   userId = memberVo.getUserid();
 			   }
 			%>
 			<a class="navbar-brand" href="#">JSP/SPRING[<%=userId%>]</a>
@@ -63,6 +63,7 @@
 			<ul class="nav nav-sidebar">
 				<li class="active"><a href="#">Main <span class="sr-only">(current)</span></a></li>
 				<li class="active"><a href="#">사용자</a></li>
+				<li class="active"><a href="<%=request.getContextPath()%>/jobsServelet">jobs</a></li>
 			</ul>
 		</div>
 		

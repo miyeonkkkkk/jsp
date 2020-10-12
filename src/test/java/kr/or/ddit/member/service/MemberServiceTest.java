@@ -18,8 +18,8 @@ public class MemberServiceTest {
 		String userId = "brown";
 		
 		MemberVO answerMemberVo = new MemberVO();
-		answerMemberVo.setUserId("brown");
-		answerMemberVo.setPassword("passBrown");
+		answerMemberVo.setUserid("brown");
+		answerMemberVo.setPass("brownPass");
 
 		/***When : 행위 ***/
 		MemberVO memberVo = memberService.getMember(userId);

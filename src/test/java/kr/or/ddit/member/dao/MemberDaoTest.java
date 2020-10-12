@@ -2,22 +2,25 @@ package kr.or.ddit.member.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import kr.or.ddit.member.model.MemberVO;
 
 public class MemberDaoTest {
+	
+	MemberDaoI memberDao = new MemberDaoImpl();
 
 	@Test
 	public void getMemberTest() {
 		
 		/***Given : 주어진 상황 기술 ***/
-		MemberDaoI memberDao = new MemberDaoImpl();
 		String userId = "brown";
 		
 		MemberVO answerMemberVo = new MemberVO();
-		answerMemberVo.setUserId("brown");
-		answerMemberVo.setPassword("passBrown");
+		answerMemberVo.setUserid("brown");
+		answerMemberVo.setPass("brownPass");
 
 		/***When : 행위 ***/
 		MemberVO memberVo = memberDao.getMember(userId);
@@ -27,6 +30,19 @@ public class MemberDaoTest {
 //		assertEquals("passBrown", memberVo.getPassword());
 		
 		assertEquals(answerMemberVo, memberVo);
+	}
+	
+	@Test
+	public void selectAllMember() {
+		/***Given : 주어진 상황 기술 ***/
+//		MemberDaoI memberDao = new MemberDaoImpl();
+
+		/***When : 행위 ***/
+		List<MemberVO> memList = memberDao.selectAllMember();
+
+		/***Then : 결과 ***/
+//		assertNotNull(memList);
+		assertEquals(5, memList.size()); // 약식 비교
 	}
 
 }
