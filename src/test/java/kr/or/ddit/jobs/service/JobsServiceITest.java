@@ -13,7 +13,7 @@ public class JobsServiceITest {
 	@Test
 	public void selectAllJobs() {
 		/***Given : 주어진 상황 기술 ***/
-		JobsServiceI service = new JobsServiceImpl();
+		JobsServiceI service = JobsServiceImpl.getService();
 
 		/***When : 행위 ***/
 		List<JobsVO> jobsList = service.selectAllJobs();

@@ -13,7 +13,7 @@ public class JobsDaoTest {
 	@Test
 	public void selectAllJobs() {
 		/***Given : 주어진 상황 기술 ***/
-		JobsDaoI dao = new JobsDaoImpl();
+		JobsDaoI dao = JobsDaoImpl.getDao();
 
 		/***When : 행위 ***/
 		List<JobsVO> jobsList = dao.selectAllJobs();

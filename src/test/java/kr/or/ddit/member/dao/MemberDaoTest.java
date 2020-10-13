@@ -10,7 +10,11 @@ import kr.or.ddit.member.model.MemberVO;
 
 public class MemberDaoTest {
 	
-	MemberDaoI memberDao = new MemberDaoImpl();
+	private MemberDaoI memberDao;
+	
+	private void init() {
+		memberDao = MemberDaoImpl.getDao();
+	}
 
 	@Test
 	public void getMemberTest() {

@@ -9,12 +9,18 @@ import kr.or.ddit.member.dao.MemberDaoImpl;
 import kr.or.ddit.member.model.MemberVO;
 
 public class MemberServiceTest {
+	
+	private MemberServiceI memberService;
+	
+	private void init() {
+		memberService = MemberServiceImpl.getService();
+	}
 
 	@Test
 	public void getMemberTest() {
 		
 		/***Given : 주어진 상황 기술 ***/
-		MemberServiceI memberService = new MemberServiceImpl();
+//		MemberServiceI memberService = new MemberServiceImpl();
 		String userId = "brown";
 		
 		MemberVO answerMemberVo = new MemberVO();
