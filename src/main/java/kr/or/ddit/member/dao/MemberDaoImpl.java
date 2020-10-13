@@ -10,10 +10,13 @@ import kr.or.ddit.member.model.MemberVO;
 public class MemberDaoImpl implements MemberDaoI {
 	
 	private static MemberDaoI dao;
-	private SqlSession sqlSession;
+	
+	// sqlSession의 인스턴스는 공유하여 사용할 수 없기 때문에 
+	// close()후 새로 생성하여 사용해야 한다.
+//	private SqlSession sqlSession;
 	
 	private MemberDaoImpl(){
-		sqlSession = MybatisUtil.getSqlSession();
+//		sqlSession = MybatisUtil.getSqlSession();
 	}
 	
 	public static MemberDaoI getDao() {
@@ -31,7 +34,7 @@ public class MemberDaoImpl implements MemberDaoI {
 		// controller 기능에 집중 => 하드코딩을 통해 dao, service는 간략하게 넘어간다.
 		//						  Mock 객체(가짜객체)
 		
-//		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
 //		MemberVO memberVo = new MemberVO();
 //		memberVo.setUserId("brown");
 //		memberVo.setPassword("passBrown");
@@ -43,6 +46,7 @@ public class MemberDaoImpl implements MemberDaoI {
 		MemberVO memberVo = sqlSession.selectOne("member.getMember", userId);
 		
 		// insert, update, delete의 경우 아래의 두경우 중 한개는 해주어야 한다. => 데이터 변경이 일어날 경우
+		// 명시적으로 해준다.
 		//sqlSession.commit(); // 반영
 		//sqlSession.rollback(); // 반영X
 		
@@ -53,7 +57,7 @@ public class MemberDaoImpl implements MemberDaoI {
 
 	@Override
 	public List<MemberVO> selectAllMember() {
-//		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
 		
 		List<MemberVO> memList = sqlSession.selectList("member.selectAllMember");
 		

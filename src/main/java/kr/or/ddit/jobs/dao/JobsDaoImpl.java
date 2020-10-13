@@ -10,10 +10,10 @@ import kr.or.ddit.jobs.model.JobsVO;
 public class JobsDaoImpl implements JobsDaoI {
 	
 	private static JobsDaoI dao;
-	private SqlSession sqlSession;
+//	private SqlSession sqlSession;
 	
 	private JobsDaoImpl(){
-		sqlSession = MybatisUtil.getSqlSession();
+//		sqlSession = MybatisUtil.getSqlSession();
 	}
 	
 	public static JobsDaoI getDao() {
@@ -25,7 +25,7 @@ public class JobsDaoImpl implements JobsDaoI {
 
 	@Override
 	public List<JobsVO> selectAllJobs() {
-//		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
 		
 		List<JobsVO> jobsList = sqlSession.selectList("jobs.selectAllJobs");
 		
