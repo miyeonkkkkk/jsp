@@ -16,10 +16,17 @@ import kr.or.ddit.jobs.service.JobsServiceImpl;
 @WebServlet("/jobsServelet")
 public class JobsServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private JobsServiceI service;
+	
+	@Override
+	public void init() throws ServletException {
+		service = JobsServiceImpl.getService();
+	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		JobsServiceI service = new JobsServiceImpl();
+//		JobsServiceI service = new JobsServiceImpl();
 		
 		List<JobsVO> jobsList = service.selectAllJobs();
 		
