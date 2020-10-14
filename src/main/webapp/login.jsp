@@ -14,12 +14,12 @@
     <title>Signin Template for Bootstrap</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/js.cookie-2.2.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/js.cookie-2.2.1.min.js"></script>
 
     <!-- Bootstrap core CSS -->
-    <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="<%=request.getContextPath()%>/css/signin.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
     
     
     <script>
@@ -102,12 +102,12 @@
 
     <div class="container">
 
-      <form class="form-signin" action="<%=request.getContextPath()%>/login" method="post" id="ff">
+      <form class="form-signin" action="${pageContext.request.contextPath}/login" method="post" id="ff">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" name="userId" class="form-control" placeholder="Email address" required autofocus value="brown">
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required value="passBrown">
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required value="brownPass">
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me" id="chk"> Remember me

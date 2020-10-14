@@ -55,11 +55,12 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("/login.jsp").forward(request, response);
 			
 		}else if(memberVo.getUserid().equals(userId) && memberVo.getPass().equals(password)) { 
+			// 로그인을 성공했을때 session 객체 생성
+			request.getSession().setAttribute("S_MEMBER", memberVo);
+
 			// 회원아이디가 존재하고, 비밀번호가 일치하는 경우(메인페이지 이동)
 			request.getRequestDispatcher("/main.jsp").forward(request, response);
 			
-			// 로그인을 성공했을때 session 객체 생성
-			request.getSession().setAttribute("S_MEMBER", memberVo);
 		}
 		
 		// 쿠키 정보

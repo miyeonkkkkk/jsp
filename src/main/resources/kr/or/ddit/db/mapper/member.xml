@@ -12,7 +12,7 @@
   
   
   <select id="selectAllMember" resultType="memberVO">
-  	SELECT *
+  	SELECT userid ,usernm ,alias , reg_dt
   	  FROM users
   </select>
 </mapper>

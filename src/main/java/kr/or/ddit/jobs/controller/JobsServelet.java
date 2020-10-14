@@ -32,7 +32,7 @@ public class JobsServelet extends HttpServlet {
 		
 		request.setAttribute("jobsList", jobsList);
 		
-		request.getRequestDispatcher("/jsp/selectAlljobs.jsp").forward(request, response);
+		request.getRequestDispatcher("/jobs/selectAlljobs.jsp").forward(request, response);
 	}
 
 
