@@ -40,13 +40,22 @@
 	
 					<a class="btn btn-default pull-right">사용자 등록</a>
 			
+					<%-- pages : ${pages} --%>
+					<!-- 현재 있는 페이지 번호 출력 -->
+					<%-- page : ${page} --%>
 					<div class="text-center">
 						<ul class="pagination">
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
+							<c:forEach begin="1" end="${pages }" var="i">
+								<!-- 현재 있는 페이지와 구분 -->
+								<c:choose>
+									<c:when test="${i == page }"> <!-- 보고 있는 페이지와 현재 선택된 페이지가 같을 때 -->
+										<li class="active"><span>${i }</span></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="${pageContext.request.contextPath}/memberListPage?page=${i}">${i}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
 						</ul>
 					</div>
 				</div>

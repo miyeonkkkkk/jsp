@@ -20,7 +20,7 @@
 	MemeberService 객체를 통해 db에서 데이터를 조회하고<br>
 	request 객체 memberList라는 이름으로 저장<br>
 	<%
-		MemberServiceI memberService = MemberServiceImpl.getService();
+		MemberServiceI memberService = new MemberServiceImpl();
 		request.setAttribute("memberList", memberService.selectAllMember());
 	%>
 	<table border="1">

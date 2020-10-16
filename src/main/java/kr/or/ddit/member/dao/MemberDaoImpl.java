@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.ddit.common.model.PageVO;
 import kr.or.ddit.db.MybatisUtil;
 import kr.or.ddit.member.model.MemberVO;
 
@@ -15,19 +16,17 @@ public class MemberDaoImpl implements MemberDaoI {
 	// close()후 새로 생성하여 사용해야 한다.
 //	private SqlSession sqlSession;
 	
-	private MemberDaoImpl(){
+	public MemberDaoImpl(){
 //		sqlSession = MybatisUtil.getSqlSession();
 	}
 	
-	public static MemberDaoI getDao() {
-		if(dao == null) {
-			dao = new MemberDaoImpl();
-		}
-		return dao;
-	}
+//	public static MemberDaoI getDao() {
+//		if(dao == null) {
+//			dao = new MemberDaoImpl();
+//		}
+//		return dao;
+//	}
 	
-
-
 	@Override
 	public MemberVO getMember(String userId) {
 		// 원래는 db에서 데이터를 조회하는 로직이 있어야 하나
@@ -64,6 +63,19 @@ public class MemberDaoImpl implements MemberDaoI {
 		sqlSession.close();
 		
 		return memList;
+	}
+
+	@Override
+	public List<MemberVO> selectAllMemberPage(SqlSession sqlSession,PageVO pv) {
+		// sqlSession 객체를 service에서 생성하여 넘겨 받기 때문에 굳이 변수에 담을 필요가 없다. close할 필요가 없기 때문
+//		List<MemberVO> memList = sqlSession.selectList("member.selectAllMemberPage", pv);
+		return sqlSession.selectList("member.selectAllMemberPage", pv);
+	}
+
+	@Override
+	public int selectMemberTotalCnt(SqlSession sqlSession) {
+//		int memberTotalCnt = sqlSession.selectOne("member.selectMemberTotalCnt");
+		return sqlSession.selectOne("member.selectMemberTotalCnt");
 	}
 
 }

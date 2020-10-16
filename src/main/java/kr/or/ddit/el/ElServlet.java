@@ -28,7 +28,7 @@ public class ElServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		memberService = MemberServiceImpl.getService();
+		memberService = new MemberServiceImpl();
 	}
        
 

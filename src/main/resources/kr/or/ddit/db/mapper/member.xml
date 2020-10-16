@@ -15,4 +15,20 @@
   	SELECT userid ,usernm ,alias , reg_dt
   	  FROM users
   </select>
+  
+  <select id="selectAllMemberPage" parameterType="pageVO" resultType="memberVO">
+  	SELECT *
+  	  FROM
+        (SELECT ROWNUM AS rn, a.*
+           FROM (SELECT *
+                   FROM users
+               ORDER BY userid) a)
+     WHERE rn BETWEEN #{pageSize} * (#{page} - 1) + 1 AND #{page} * #{pageSize}
+  </select>
+  
+  <select id="selectMemberTotalCnt" resultType="int">
+  	SELECT COUNT(*)
+  	  FROM users
+  </select>
+  
 </mapper>

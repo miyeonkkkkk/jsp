@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		// service 객체 생성
-		memberService = MemberServiceImpl.getService();
+		memberService = new MemberServiceImpl();
 	}
        
 	// login화면을 클라이언트에게 응답으로 생성

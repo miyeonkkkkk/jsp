@@ -1,0 +1,17 @@
+기본 : page 파라미터만 받고 있음, 디폴트 1
+변경 : page 파라미터만 받고 있음, 디폴트 1
+	 ** 추가
+	 pageSize 파라미터 추가, 디폴트 5
+	
+	파라미터 확인 MemberListPageServlet
+	memberDao, memberService, selectAllMemberPage(int page)
+					-->		  selectAllMemberPage(PageVO pv)
+	member.xml
+	
+	memberDaoTest, memberServiceTest
+
+JSTL 국제화
+하나의 사이트에서 사용자의 요청에 따라 다른 언어로 생성하는 기능
+국제화 기능이 자동으로 언어 번역을 해주는 것은 아님
+
+서비스할 언어에 대해 번역본을 준비 ==> 리소스 번들

@@ -1,0 +1,63 @@
+테이블 페이징 쿼리 작성
+
+
+페이지 사이즈는 7건
+2페이지를 조회하는 쿼리
+
+users 테이블 => 페이지 번호, 페이지 사이즈 변수가 필요하다.
+1페이지(1~7행) : apeach~edward (총 7개의 행)
+2페이지(8~14행) : james~ryan (총 7개의 행)
+3페이지(15~21행) : sally (총 1개의 행)
+
+select절에서 함수와 *를 함께 사용할 경우 *가 누구의 것인지 정의해 주어야 한다.
+ 
+ROWNUM 이란 함수는 1부터 읽어야 사용이 가능하다.
+SELECT ROWNUM, a.*
+  FROM (SELECT *
+          FROM users
+     ORDER BY userid) a
+ WHERE ROWNUM BETWEEN 8 AND 14;
+ => 그래서 위의 쿼리 결과는 나오지 않는다.
+ 
+ SELECT *
+   FROM
+     (SELECT ROWNUM rn, a.*
+        FROM (SELECT *
+                FROM users
+            ORDER BY userid) a)
+   WHERE rn BETWEEN 1 AND 7; => 1페이지 처리
+   WHERE rn BETWEEN 8 AND 14; => 2페이지 처리
+   WHERE rn BETWEEN 15 AND 21; => 3페이지 처리
+ => 그래서 위의 쿼리로 서브쿼리를 사용해야 한다.(인라인뷰)
+ 
+ 페이지 번호, 페이지 사이즈(7)
+ int page = 2, int pageSize = 7
+ 
+WHERE rn BETWEEN #{pageSize}*(#{page}-1} + 1 AND #{page} * #{pageSize};
+-> 오라클 바인드 변수 형식으로 변경
+ => WHERE rn BETWEEN (:pageSize)*(:page-1) + 1 AND :page * :pageSize;
+   
+#{page} * #{pageSize} - (#{pgaeSize}-1})
+-> #{page} * #{pageSize} - #{pgaeSize} + 1
+-> #{pageSize}*(#{page}-1) + 1
+ 
+ 
+ <select id="selectAllMemberPage" parameterType="hashmap" resultType="memberVO">
+  	SELECT userid ,usernm ,alias , reg_dt
+  	  FROM
+        (SELECT ROWNUM rn, a.*
+           FROM (SELECT *
+                   FROM users
+               ORDER BY userid) a)
+     WHERE rn BETWEEN #{pageSize}*(#{page}-1) + 1 AND #{page} * #{pageSize}
+  </select>
+  
+총 데이터수 : 15
+페이지 사이즈 : 7
+15/7 = 2.xx ==> 올림 ==> 3
+
+
+
+ 
+ 
+ 
