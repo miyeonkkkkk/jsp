@@ -54,7 +54,7 @@ public class MemberServiceTest {
 		
 		PageVO pv = new PageVO(1, 5);
 		
-		logger.debug("{}",pv.getPage());
+//		logger.debug("{}",pv.getPage());
 		
 		Map<String, Object> map = memberService.selectAllMemberPage(pv);
 		List<MemberVO> memList = (List<MemberVO>)map.get("memberList");
@@ -65,8 +65,8 @@ public class MemberServiceTest {
 		
 		/***Then : 결과 ***/
 //		assertNotNull(memList);
-//		assertEquals(5, memList.size()); // 약식 비교
-//		assertEquals(3, pv.getPageSize()); // 약식 비교
+		assertEquals(5, memList.size()); // 약식 비교
+//		assertEquals(3, pages); // 약식 비교
 		
 	}
 	

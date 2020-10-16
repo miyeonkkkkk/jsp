@@ -7,6 +7,7 @@
   <typeAliases>
   	<typeAlias type="kr.or.ddit.member.model.MemberVO" alias="memberVO"/>
   	<typeAlias type="kr.or.ddit.jobs.model.JobsVO" alias="jobsVO"/>
+  	<typeAlias type="kr.or.ddit.common.model.PageVO" alias="pageVO"/>
   </typeAliases>
 
   <environments default="development">
