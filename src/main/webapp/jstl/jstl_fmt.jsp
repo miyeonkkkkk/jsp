@@ -34,9 +34,22 @@
 				$('#ff').submit();
 			})
 		})
+		
+		// 이 문서가 실행이 되었을 때
+// 		$(document).ready(function(){
+// 			$(#'lang').val("${param.laguage == null ? 'ko' : param.laguage}")
+// 			$('#lang').on('change', function(){
+				// 주소로 이동한다.
+// 				document.location = "이동할 주소";
+// 				document.location = "/jstl/jstl_fmt.jsp?lang=" + $('#lang').val();
+			})
+	
+		})
+
+
 	</script>
 	
-	<fmt:setLocale value="${param.laguage}" />
+	<fmt:setLocale value="${param.laguage == null ? 'ko' : param.laguage}" />
 
 	<form action="${pageContext.request.contextPath}/jstl/jstl_fmt.jsp"
 		id="ff">
