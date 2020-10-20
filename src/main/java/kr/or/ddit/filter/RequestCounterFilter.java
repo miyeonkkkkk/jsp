@@ -63,9 +63,15 @@ public class RequestCounterFilter implements Filter {
 			requestConterMap.put(req.getRequestURI(), value + 1);
 		}
 		
+		// 전처리 : servlet 요청 단계 에서 전처리
+		logger.debug("RequestCounterFilter 전처리 부분 - chain.doFilter 호출전");
+		
 		// 등록된 다른 필터로 요청을 위임
 		// 만약 더이상 등록된 필터가 없을 경우 요청을 처리할 서블릿/jsp으로 요청을 전달
-		chain.doFilter(request, response);
+		chain.doFilter(request, response); // servlet 처리
+		
+		// 후처리 : servlet 응답 생성후 응답이 웹브라우저로 가는 단계에서 후속처리
+		logger.debug("RequestCounterFilter 전처리 부분 - chain.doFilter 호출후");
 		
 	}
 

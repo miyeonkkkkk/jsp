@@ -30,11 +30,13 @@ public class LoginServlet extends HttpServlet {
        
 	// login화면을 클라이언트에게 응답으로 생성
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("loginServlet.doGet");
 		request.getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 
 	// login화면에서 사용자가 보낸 아이디, 비밀번호를 사용하여 로그인 처리
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		

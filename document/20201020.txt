@@ -1,0 +1,15 @@
+RequestCounterFilter
+LoginServlet
+
+// 전처리(요청이 요청을 처리할 서블릿으로 가기 전)
+chain.doFilter
+// 후처리(생성된 응답이 클라이언트에게 가는 중)
+
+필터 처리 순서
+전처리 ==> 서블릿 ==> 후처리
+1. logger.debug("RequestCounterFilter 전처리 부분 - chain.doFilter 호출전");
+2. logger.debug("loginServlet.doGet");
+3. logger.debug("RequestCounterFilter 전처리 부분 - chain.doFilter 호출후");
+
+위에서부터 읽어내려오면서 해당 uri(설정 해준 uri외 처리)에 대해서 새로운 요청을 보낸다. 
+그래서 debug를 출력했을때 출력된다. uri에 대해서 캐싱 해둔다. 그래서 갱신이 안되는 문제점도 있다.
