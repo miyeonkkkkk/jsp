@@ -45,15 +45,15 @@
   </servlet-mapping>
   
   <!-- filter 등록 -->
-  <filter>
-  	<filter-name>requestConterFilter</filter-name>
-  	<filter-class>kr.or.ddit.filter.RequestCounterFilter</filter-class>
-  </filter>
+<!--   <filter> -->
+<!--   	<filter-name>requestConterFilter</filter-name> -->
+<!--   	<filter-class>kr.or.ddit.filter.RequestCounterFilter</filter-class> -->
+<!--   </filter> -->
   
-  <filter-mapping>
-  	<filter-name>requestConterFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
-  </filter-mapping>
+<!--   <filter-mapping> -->
+<!--   	<filter-name>requestConterFilter</filter-name> -->
+<!--   	<url-pattern>/*</url-pattern> -->
+<!--   </filter-mapping> -->
   
   <context-param>
   	<param-name>dbUserId</param-name>
