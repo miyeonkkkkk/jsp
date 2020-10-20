@@ -55,6 +55,19 @@
 <!--   	<url-pattern>/*</url-pattern> -->
 <!--   </filter-mapping> -->
   
+  <!-- listener 등록 -->
+  <listener>
+  	<listener-class>kr.or.ddit.listener.SessionListener</listener-class>
+  </listener>
+  
+  <listener>
+  	<listener-class>kr.or.ddit.listener.SessionAttributeListener</listener-class>
+  </listener>
+
+  <listener>
+  	<listener-class>kr.or.ddit.listener.ApplicationListener</listener-class>
+  </listener>
+  
   <context-param>
   	<param-name>dbUserId</param-name>
   	<param-value>sem</param-value>
