@@ -25,7 +25,7 @@ public class SessionAttributeListener implements HttpSessionAttributeListener{
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		
 		// 로그인이 되었을 때 감지
-		if("S_MEMBER".equals(event.getName())){ // 이벤트가 일어난 값을 가져온다.
+		if("S_MEMBER".equals(event.getName())){ // 이벤트가 일어난 속성값을 가져온다.
 			logger.debug("attribute Add");
 			logger.debug("사용자 로그인 했다잉");
 			
