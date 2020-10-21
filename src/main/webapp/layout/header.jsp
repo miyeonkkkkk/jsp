@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -19,17 +18,18 @@
 // 			   }
 			%>
 			<%--<a class="navbar-brand" href="#">JSP/SPRING[<%=userId%>]</a>--%>
-			접속을 안했을 때 : 		 ==> []
-			접속을 했을 때 : [brown] ==> [brown]
-			<a class="navbar-brand" href="#">
-			<c:choose>
-				<c:when test="${S_MEMBER.userid == null}">
-					JSP/SPRING
-				</c:when>
-				<c:otherwise>
-					JSP/SPRING[${S_MEMBER.userid}]
-				</c:otherwise>
-			</c:choose>
+<!-- 			접속을 안했을 때 : 		 ==> [] -->
+<!-- 			접속을 했을 때 : [brown] ==> [brown] -->
+			<a class="navbar-brand" href="${pageContext.request.contextPath }/main.jsp">
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${S_MEMBER.userid == null}"> --%>
+<!-- 					JSP/SPRING -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<%-- 					JSP/SPRING[${S_MEMBER.userid}] --%>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
+				JSP/SPRING <c:if test="${S_MEMBER != null}">[${S_MEMBER.userid}]</c:if>
 			</a>
 <%-- 			<a class="navbar-brand" href="#">JSP/SPRING[<%=memberVo == null ? "" : memberVo.getUserId()%>]</a> --%>
 		</div>
