@@ -20,6 +20,7 @@ public class LogoutServlet extends HttpServlet {
 		
 //		세션에 저장된 속성 제거 : session.invalidate();
 		session.invalidate();
+		
 //		session.removeAttribute("S_MEMBER"); => 지정된 속성 1개만 삭제됨.
 //		session.setMaxInactiveInterval(0); => listener 적용 안됨 , 속성 삭제 안됨
 		
