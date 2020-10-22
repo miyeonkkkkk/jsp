@@ -11,8 +11,8 @@ public class MemberVO {
 	private String addr1;
 	private String addr2;
 	private String zipcode;
-	private String filename;
-	private String realFilename;
+	private String filename; // 파일명 중복 방지를 위해 파일명을 우리가 직접 설정
+	private String realFilename; // 사용자가 업로드 당시에 파일명 => 파일을 내려받을때에 원래 파일명으로 사용
 	
 	private Date reg_dt;
 	

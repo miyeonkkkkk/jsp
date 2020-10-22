@@ -37,7 +37,10 @@
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
 						<div class="col-sm-10">
-							<img alt="" src="${cp }/profile/${mv.filename}.png"/>
+						<!-- webapp 폴더 밑에 이미지를 두었을 때 사용 -> 배포시 폴더 삭제 과정이 있으므로 사용 불가 -->
+<%-- 							<img alt="이미지 없구용" src="${cp }/profile/${mv.filename}"/> --%>
+							
+							<img alt="" src="${cp }/profileImg?userid=${mv.userid }"/>
 						</div>
 					</div>
 					
@@ -91,13 +94,13 @@
 						<label for="reg_dt" class="col-sm-2 control-label">등록일자</label>
 						<div class="col-sm-10">
 <%-- 							<fmt:formatDate value="${mv.reg_dt }" pattern="yyyy-mm-dd"/> --%>
-							<label class="control-label"><fmt:formatDate value="${mv.reg_dt }" pattern="yyyy-mm-dd"/></label>
+							<label class="control-label"><fmt:formatDate value="${mv.reg_dt }" pattern="yyyy-MM-dd"/></label>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-default">사용자 등록</button>
+							<button type="submit" class="btn btn-default">사용자 수정</button>
 						</div>
 					</div>
 				</form>
