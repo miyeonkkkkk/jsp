@@ -9,6 +9,7 @@ public class FileUploadUtil {
 	// ==> aa.jpg
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
 	
+	// 파일명을 추출하기 위한 메서드
 	public static String getFileNameFromHeader(String contentDisposition) {
 		String fileName = "";
 		String[] cd_data = contentDisposition.split("; ");
@@ -21,6 +22,20 @@ public class FileUploadUtil {
 			}
 		}
 		return fileName;
+	}
+	
+	// filename : sally.png ==> png
+	// 확장자를 추출하기 위한 메서드
+	public static String getExtension(String filename) {
+		
+		if(filename == null || filename.indexOf(".") == -1) {
+			return "";
+		}else {
+			// 정규화 표현으로 넣어야 한다.
+			return filename.trim().split("\\.")[1];
+		}
+		
+		
 	}
 
 }

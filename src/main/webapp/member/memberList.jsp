@@ -62,7 +62,7 @@
 							</table>
 						</div>
 
-						<a class="btn btn-default pull-right">사용자 등록</a>
+						<a class="btn btn-default pull-right" href="${cp }/memberRegist">사용자 등록</a>
 
 						<%-- pages : ${pages} --%>
 						<!-- 현재 있는 페이지 번호 출력 -->

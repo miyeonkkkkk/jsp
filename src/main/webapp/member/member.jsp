@@ -15,6 +15,25 @@
 <title>Jsp</title>
 
 <%@include file="/layout/commonLib.jsp"%>
+<script>
+$(document).ready(function(){
+
+	$('#updateBtn').on('click', function(){
+		userid = $('#userid').text();
+		console.log(userid);
+		
+		document.location = "/memberUpdate?userid=" + userid;
+	})
+	
+})
+</script>
+
+<style>
+#profile{
+	width: 300px;
+	height: 300px;
+}
+</style>
 </head>
 
 <body>
@@ -40,14 +59,14 @@
 						<!-- webapp 폴더 밑에 이미지를 두었을 때 사용 -> 배포시 폴더 삭제 과정이 있으므로 사용 불가 -->
 <%-- 							<img alt="이미지 없구용" src="${cp }/profile/${mv.filename}"/> --%>
 							
-							<img alt="" src="${cp }/profileImg?userid=${mv.userid }"/>
+							<img id="profile" alt="" src="${cp }/profileImg?userid=${mv.userid }"/>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 아이디</label>
 						<div class="col-sm-10">
-							<label class="control-label">${mv.userid }</label>
+							<label id="userid" class="control-label">${mv.userid }</label>
 						</div>
 					</div>
 
@@ -100,7 +119,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-default">사용자 수정</button>
+							<button id="updateBtn" type="button" class="btn btn-default">사용자 수정</button>
 						</div>
 					</div>
 				</form>
