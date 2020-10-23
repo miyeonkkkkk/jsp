@@ -19,11 +19,14 @@
 $(document).ready(function(){
 
 	$('#updateBtn').on('click', function(){
-		userid = $('#userid').text();
-		console.log(userid);
-		
-		document.location = "/memberUpdate?userid=" + userid;
-	})
+// 		userid = $('#userid').text();
+// 		console.log(userid);
+		document.location = "/memberUpdate?userid=${mv.userid }";
+	});
+
+	$('#profileDownBtn').on('click', function(){
+		document.location = "/profileDownload?userid=${mv.userid }";
+	});
 	
 })
 </script>
@@ -59,7 +62,13 @@ $(document).ready(function(){
 						<!-- webapp 폴더 밑에 이미지를 두었을 때 사용 -> 배포시 폴더 삭제 과정이 있으므로 사용 불가 -->
 <%-- 							<img alt="이미지 없구용" src="${cp }/profile/${mv.filename}"/> --%>
 							
-							<img id="profile" alt="" src="${cp }/profileImg?userid=${mv.userid }"/>
+							<img id="profile" alt="" src="${cp }/profileImg?userid=${mv.userid }"/><br><br>
+							<!-- 여러명의 회원중에서 선택할 경우에 아래의 코드 사용 -->
+<%-- 							<button id="profileDownBtn" data-userid="${mv.userid }" type="button" class="btn btn-default">다운로드 : ${mv.realFilename }</button> --%>
+							
+							<!-- 한명의 상세정보이기 때문에 아래 코드 사용  -->
+							<button id="profileDownBtn" type="button" class="btn btn-default">다운로드 : ${mv.realFilename }</button>
+							
 						</div>
 					</div>
 					

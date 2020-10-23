@@ -1,0 +1,23 @@
+1. 파일 업로드 ==> 파일 다운로드
+업로드시 filename 가져온 방법??
+- Content-Disposition 헤더에서 획득
+- Content-Disposition : form-data; name="img"; filename="aa.jpg";
+
+
+2. 쿼리 (계층형, 답변형 게시판, *답변 횟수에 제한이 없는)
+
+3. 웹에디터 : summer note
+
+==================================================
+Content-Disposition: inline => 화면에 보여줄 경우
+Content-Disposition: attachment => 다운로드 받을 경우
+Content-Disposition: attachment; filename="filename.jpg" => 다운로드를 받고 그 파일명을 사용자가 지정할 경우
+
+Content-Type(=media type) : 전송하거나 받는 데이터의 타입을 저장
+
+===================================================
+계층 쿼리
+- 데이터의 상하 관계를 표현하는 쿼리
+ex) 사원들간의 상하 관계
+- 시작 위치를 선정 후 다음 계층과의 연결을 표현
+- 오라클에서만 사용 가능
