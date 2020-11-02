@@ -1,0 +1,110 @@
+DL(Dependency Lookup) - 개발자가 주체(제어건이 개발자에게...), 원하는 객체를 요청
+DI(Dependency Injection) - SetterDI, 생성자 2가지 종류가 있다. / 개발자 주체가 아니다 , 컨테이너가 주입해준다
+<bean id="boardService" class="kr.or.ddit.board.service.BoardServiceImpl">
+	<!-- boardService가 의존하는 boardDao 스프링빈을 setter 메소드를 통해 주입(Dependency Injection) -->
+	<property name="boardRepository" ref="boardDao"/>
+	<!-- 생성자로 주입 -->
+	<constructor-arg></constructor-arg>
+</bean>
+
+- Spring 컨테이너를 직접 만들어서 사용
+- 웹에서는 사용자가 Server로 url 요청시 실행 
+   -> listner(main에서 Spring 객체를 만들지 않아도 된다.)를 통해 기동 : 라이프사이클(서버기동 리스너)
+   -> Container가 모든 준비를 해논 상태(DL준비 완료)이기 때문에 주입만 하면 된다.(@Resourece 어노테이션을 통해 주입)
+   -> @Repository 어노테이션을 붙이면 컨테이너가 bean을 등록해준다.
+   
+=> Spring Container에서 controller, service, dao가 다같이 관리된다.(공유된다.)
+  ==> 트랜잭션 관리가 가능하다. -> 예외 발생시 rollback, 문제가 없을 시 commit
+  ==> model 같은 경우 등록을 해서 사용하지 않고 필요할때마다 생성하여 사용
+  
+@RunWith : Spring에서 제공해주는 runner
+@RunWith(SpringJUnit4ClassRunner.class)
+
+@ContextConfiguration(locations[value] = {"classpath:kr/or/ddit/config/spring/ioc/ioc.xml"})
+: 사용설명서를 지정, 1개 또는 여러개를 지정 할 수 있다. => 문자열 배열이기 때문
+
+@Autowired : 스프링 빈중에 호환되는 타입의 빈이 있을 때 주입
+-> 빈의 id를 모르더라도 주입받을 수 있다. => DI
+
+@Resource : Sptring 컨테이너안에 등록이 되어있을때 사용 가능(컨테이너가 관리하는 영역에서만 가능) => servlet은 톰캣이 관리하기 때문에 사용이 힘들다.
+
+servlet이 HttpServlet에 의존하기 때문에 톰캣이 무조건적으로 필요하다. => 단점
+
+DB는 데이터 블럭(여러개의 행이 존재한다.)단위로 존재한다. 
+데이터 블럭(헤더(메타 데이터 : 저장된 데이터에 대한 설명을 저장한다.) + 데이터)
+: 8kb ~ 64kb 까지 저장 가능
+: 데이터 블럭의 저장 공간을 넘어갈경우 다음 데이터 블럭에 저장 => 블럭체인
+오라클에서는 Row Level 별로 locking 한다.
+
+==============================================================================================
+ 스프링 컨테이너 == IOC 컨테이너 == 컨테이너
+  : 스프링 빈을 생성, 관리하는 객체
+  : * 서블릿 컨테이너에서 HttpServlet 클래스를 상속하여 작성한 서블릿을 관리하는 것과 유사
+	  서블릿 컨테이너를 통해 서블릿을 관리할 때 얻을 수 있는 점
+	  url을 호출 했을 때 매핑된 서블릿의 service 메소드를 호출 할 수 있다.
+	  ==> 개발자가 servlet 코드를 직접 실행 하지 않는다.
+	  ==> 실행에 대한 제어가 서블릿 컨테이너에게 있다.
+	  ==> 개발자는 servlet 스팩에 맞게 서블릿을 작성만 한다.
+
+DI : Dependency Injection - 의존성 주입
+	 의존성을 고려하여 필요한 객체를 setter, 생성자, reflection를 통해 제공하여 설정하는 작업
+	 --> reflection : @Autowired(호환Type으로 설정 - spring framework), @Resource(빈의 이름), 
+	                  @Inject(호환 Type으로 설정 - java 표준)
+	 --> service 객체서 필요한 dao 객체를 setter를 통해 주입
+	 	<bean id="service" class="...">
+	 		<property name="dao" ref="dao"/>
+	 	</bean>
+DL : Dependency Lookup - 의존 검색
+     컨테이너로 부터 관리되는 빈을 요청
+ 
+ ==> DI, DL, IOC, AOP 등 스프링에서 자주 언급되는 개념은 스프링에 종속되는 개념이 아니라
+	 디자인 패턴에서 다루는 언어와 관련 없는 일반적인 개념
+	 
+스프링 빈 scope
+기본 값 : singleton
+	<bean> 엘레멘트에서 선언한 id, name별로 객체가 관리된다는 의미
+	class 속성이 동일한 bean이 여러개 존재 할 수 있다.
+prototype(사용 잘 안함) : DL을 할 때 마다 스프링 컨테이너가 새로운 스프링 빈 객체를 생성하여 리턴 => 요청 할때마다 값이 달라짐
+			(singleton처럼 한번 생성해놓고 재활용 하지 않음)
+
+디자인 패턴의 singleton : 클래스 객체가 하나만 생성되도록 강제하는 디자인 패턴
+public static getInstance() -> 오류 동시접근시 안된다.
+static 블럭을 통해 해당 객체를 한번 생성하여 그 객체를 return 하거나,
+동기화를 걸어둔다. 
+	 
+스프링 빈 속성
+- lazy-init : 빈 생성 시기 설정
+		    빈이 필요해지는 시점에 스프링 컨테이너가 해당 스프링 빈을 생성
+		    default : 스프링 빈이 만들어지는 시점에서 모든 스프링 빈을 생성
+
+스프링 빈의 갯수가 많아 질때 ==> server start ==> 스프링 빈 초기화 ===> 서버가 켜지는데 시간이 지연
+만약 lazy-init 속성을 true로 설정 할 경우 ==> 해당 빈이 필요할 때 생성 ==> 스프링 컨테이너 생성시 초기화 시간이 단축된다.
+								   ==> 오라클 row level locking과 비슷
+- init-method, destory-method : 스프링 빈 생성, 소멸시 초기화, 리소스 해제시 사용
+- factory-bean, factory-method : 생성자가 아닌 factory 객체를 통해 객체를 생성할 때 사용
+- depends-on : 스프링 빈 생성시 이전에 반드시 생성이 되어야 하는 다른 스프링 빈을 명시
+
+	 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
