@@ -127,6 +127,7 @@ function initData(){
 							<button id="regBtn" type="button" class="btn btn-default">사용자 등록</button>
 						</div>
 					</div>
+					
 				</form>
 			</div>
 			

@@ -18,7 +18,7 @@ public class MemberServiceImpl implements MemberServiceI {
 	private MemberDaoI memberDao;
 
 	public MemberServiceImpl() {
-		memberDao = new MemberDaoImpl();
+		memberDao = new MemberDaoImpl(); // 제어건이 우리에게 있다.
 	}
 
 //	public static MemberServiceI getService() {
