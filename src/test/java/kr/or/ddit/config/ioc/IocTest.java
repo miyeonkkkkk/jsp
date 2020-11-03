@@ -17,7 +17,7 @@ public class IocTest {
 		// 스프링 컨테이너로 : applicationContext
 		// 사용설명서의 위치를 인자로 받는다.
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:kr/or/ddit/config/spring/ioc/ioc.xml");
-		
+
 		// 2. 스프링 컨테이너로 부터 스프링 빈을 받아서 사용
 		// 컨테이너에게 원하는 스프링 빈을 요청하여 받는 과정 (DL : Dependency Lookup) - 의존성을 찾는다.
 		// ==> getBean() 과정
