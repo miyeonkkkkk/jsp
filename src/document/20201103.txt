@@ -1,0 +1,148 @@
+리터럴(literal) : 값 자체
+리터럴 표기법
+
+- 정수 표현 ?
+ int a = 10;
+
+- 문자열 표현?
+java
+ String str = "hello, world";
+ 
+sql
+ SELECT 'hello, world'
+   FROM dual;
+
+- 날짜 표현?
+java ==> Data 객체를 통해 표현 / 문자열을 넣어준다고 해서 설정이 가능하지 않다 => 형변환을 지정해주어야 한다.(개발자가 포맷제공) => 스프링에서 기본적으로 변환되지 않는다.
+sql ==> 일관된 표현법이 없다. 사용자마다 다르다. / 
+	==> NLS 포맷에 정의된 형식을 따르지만 TO_DATE 함수 사용을 권장(나라마다 표기법이 다르기 때문)
+SYSDATE	 ==> 함수, 오라클 서버의 현재 시간을 반환하는 오라클 내장 함수 
+
+==> xml파일은 적절한 표기법이 없기 때문에 스프링 컨테이너가 값을 읽을때 적절한 형으로 형변환 한다.
+
+==> 객체의 필드(속성)에 값을 주입시 xml에서는 문자열과 숫자 구분이 되지 않지만, 
+	해당 필드의 타입을 보고 스프링 컨테이너가 적당한 형변환을 통해 값을 주입한다.
+=> 단, 날짜에 대해서는 스프링 프레임워크에서 기본 전략을 제공하지 않기 때문에
+   개발자가 별도로 설정을 해줘야 한다.
+
+타입 변환이 필요로 하는 곳
+1. bean 속성 주입
+2. controller 메소드의 파라미터 바인딩
+
+스프링 타입 변환 방식 3가지
+1. property editor : 문자 => 타입 변환
+2. conversion service : 타입 => 타입 변환
+	- Converter<변경전 타입, 변경후 타입>
+	- 스프링 프레임워크에 등록 (bean 이름이 conversionService를 사용하게끔 설정되어 있음)
+		ConversionServiceFactoryBean 클래스의 converters 속성에 set으로 넣어준다.
+		<bean id="conversionService" class="....ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="Converter 인터페이스를 구현한 클래스" />
+			</set>
+		</property>
+	</bean>
+3. formatting conversion service ☆☆☆☆☆
+	1. 주입하려는 필드에 포맷팅과 관련된 어노테이션 설정
+		: @DateTimeFormat(pattern = "yyyy-MM-dd"), @NumberFormat(pattern = "#,###")
+		: 패턴지정을 할 수 있기 때문에 각각 date객체마다 패턴을 다르게 지정할 수 있다.
+	2. FormattingConversionServiceFactoryBean 클래스를 스프링 빈으로 등록
+		(** 빈이름이 conversionService로 고정됨)
+		
+================================================================================================
+Spring MVC 아키텍처
+- Controller, Service, Repository 는 개발자가 개발 그 외에는 Spring에서 제공
+
+- Servlet에서 응답을 생성하지 않는 이유 : 로직(요청 생성)과 화면(응답 생성 : html, json, xml)을 분리 => 역할을 분리 => 유지보수 강조
+
+- Spring에서 제공 : HttpServlet 상속을 받지 않아도 Controller를 만들수 있다. / Servlet처럼 doXXX 메소드로 한정되어 있지 않다.
+Requeset => Dispatcher Servlet : 요청 분석(모든 요청 처리) => Handler Mapping : Controller 선택
+  => Handler Adapter : request 객체에서 parameter이름과 메소드 인자를 바인딩 하여 준비 => Controller 
+  => view Name : Controller에서 반환하는 문자열/ view name에 따라서 응답이 달라진다. => Dispatcher Servlet 
+  => View Resolver : View(응답 생성)를 누가 처리할지 선택 => View(jsp, json, xml,...) => Response
+
+- Model 객체(requset 객체와 비슷)에 scope를 넣어둔다. => View에서 필요한 속성을 가져와 응답 생성
+
+- Spring 컨테이너도 부모자식관계를 맺을 수 있다 => 빈을 재사용하기 위해서 (상속과 같은 개념 - 코드 재사용, 유지보수 목적)
+
+---------------------------------------------------------------------------------------------
+스프링 컨테이너의 부모-자식 관계
+- 객체의 상속과 동일한 원리
+- 부모 컨테이너에 등록된 스프링빈을 자식 컨테이너에서도 참조 가능
+- 부모는 자식 컨테이너에 등록된 스프링빈을 참조 할 수 없음.
+
+- 자식 컨테이너가 둘 이상일 때, 두 자식 컨테이너에서 공통적으로 사용할 스프링 빈을
+부모 컨테이너에 넣게 될 경우, 자식 입장에서는 별도의 스프링 빈을 등록하지 않고 사용이 가능.
+
+- 부모 컨테이너에서 스프링 빈을 한번만 등록하므로 메모리 절약
+
+- 부모 컨테이너에 service, dao를 생성하고 자식 컨테이너에 dispatcherServlet 생성
+=> 자식 컨테이너가 하나만 필요한 상황이더라도 추후 확장성을 위해 
+부모-자식 컨테이너로 분리해서 확장을 고려한다.
+
+-----------------------------------------------------------------------------------------------
+ServletContextListener : 서버가 실행될 때 이벤트를 감지하여 실행
+
+스프링에서 만들어놓은 리스너를 통해 서버가 로딩될 때 컨테이너를 만들어준다. => 여기서 실행된 컨테이너가 부모 컨테이너가 된다.
+
+부모 컨테이너 생성
+ContextLoaderListener 클래스를 이용하여 서버 기동시 이벤트를 감지
+<listener>
+	<listener-class>org.springframework......ContextLoaderListener</listener-class>
+</listener> 
+	==> <context-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>설정 파일 위치</param-value> 
+		</context-param>
+		초기화 파라미터 중 contextConfigLocation 으로 설정된 값을 찾아
+		부모 컨테이너(service, dao)를 생성
+		
+자식 컨테이너 생성
+dispatcherServlet을 통해 생성
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<servlet-class>org.springframework......DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>설정 파일 위치[, 설정 파일 위치]</param-value> 
+		</init-param>
+	</servlet>
+
+
+=================================================
+Controller는 참조하는 클래스가 없기 때문에 bean이름을 지정해 주지 않아도 된다.
+
+WEB-INF 폴더는 외부에서 접근 불가능 => 사용자의 접근을 막는다./ 서블릿안에서만 접근 가능
+
+================================================
+dispatcherSerlvet의 url-pattern 에 따른 정상 처리여부
+
+url-pattern		spring controller(/login/view.do)		index.jsp		js/bootstrap.js 		mvc:default-servlet-handler
+	/*							X							X					X							X
+	/*							X						정적자료처럼				O							O
+	/							O							O					X(정적자료 처리 능력X)			X
+	/							O							O					O							O
+=> Spring에서는 jsp를 처리해줄 능력이 없다. => 톰캣에서 처리를 해주어야 하는데 dispatcherServlet이 처리하도록 했기 때문에 안된다.(우선순위에 의해서)
+=> /* 패턴때문에 .jsp, /(default url : 설정해놓은 url-pattern이 없을 경우 가장 마지막에 처리) 에 대한 요청이 모두 /*로 들어가기 때문에 응답 생성이 안된다.
+=> 모두 /*로 들어가기 때문에 응답 생성이 안된다. => Spring에서는 처리해줄 능력이 없기 때문이다.
+=> Spring framework에는 정적자료를 처리해줄 능력이 없다.
+
+	*.do						O							O					O
+=> dispatcherServlet에서는 *.do만 처리하기 때문에 톰캣이 나머지 부분들을 처리해준다. 그래서 응답이 생성된다.
+
+=> 다른 서블릿으로 위임시
+requset.getServletContext().getNameDispatcher("default").forward(request, response)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
