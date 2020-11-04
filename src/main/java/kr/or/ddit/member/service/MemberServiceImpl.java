@@ -17,6 +17,7 @@ import kr.or.ddit.member.model.MemberVO;
 @Service("memberService")
 public class MemberServiceImpl implements MemberServiceI {
 
+	// new 연산자를 사용시 빈을 재사용 하지 못한다.
 	@Resource(name = "memberRepository")
 	private MemberDaoI memberDao;
 

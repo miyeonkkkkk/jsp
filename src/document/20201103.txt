@@ -13,7 +13,7 @@ sql
    FROM dual;
 
 - 날짜 표현?
-java ==> Data 객체를 통해 표현 / 문자열을 넣어준다고 해서 설정이 가능하지 않다 => 형변환을 지정해주어야 한다.(개발자가 포맷제공) => 스프링에서 기본적으로 변환되지 않는다.
+java ==> Date 객체를 통해 표현 / 문자열을 넣어준다고 해서 설정이 가능하지 않다 => 형변환을 지정해주어야 한다.(개발자가 포맷제공) => 스프링에서 기본적으로 변환되지 않는다.
 sql ==> 일관된 표현법이 없다. 사용자마다 다르다. / 
 	==> NLS 포맷에 정의된 형식을 따르지만 TO_DATE 함수 사용을 권장(나라마다 표기법이 다르기 때문)
 SYSDATE	 ==> 함수, 오라클 서버의 현재 시간을 반환하는 오라클 내장 함수 
@@ -35,7 +35,7 @@ SYSDATE	 ==> 함수, 오라클 서버의 현재 시간을 반환하는 오라클
 	- Converter<변경전 타입, 변경후 타입>
 	- 스프링 프레임워크에 등록 (bean 이름이 conversionService를 사용하게끔 설정되어 있음)
 		ConversionServiceFactoryBean 클래스의 converters 속성에 set으로 넣어준다.
-		<bean id="conversionService" class="....ConversionServiceFactoryBean">
+	<bean id="conversionService" class="....ConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
 				<bean class="Converter 인터페이스를 구현한 클래스" />

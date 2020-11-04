@@ -47,8 +47,7 @@ public class MemberDaoImpl implements MemberDaoI {
 //		int memberTotalCnt = sqlSession.selectOne("member.selectMemberTotalCnt");
 		return sqlSession.selectOne("member.selectMemberTotalCnt");
 	}
-
-	@Override
+ 
 	public int insertMember(MemberVO mv) {
 		SqlSession sqlSession = MybatisUtil.getSqlSession();
 		int insertCnt = 0;
