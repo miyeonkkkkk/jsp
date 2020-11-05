@@ -1,7 +1,5 @@
 package kr.or.ddit;
 
-import javax.annotation.security.DenyAll;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
