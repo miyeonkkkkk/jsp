@@ -10,41 +10,41 @@
      WHERE userid = #{userid}
   </select>
   
-<!--   <select id="selectAllMember" resultType="memberVO"> -->
-<!--   	SELECT userid ,usernm ,alias , reg_dt -->
-<!--   	  FROM users -->
-<!--   </select> -->
+  <select id="selectAllMember" resultType="memberVO">
+  	SELECT userid ,usernm ,alias , reg_dt
+  	  FROM users
+  </select>
   
-<!--   <select id="selectAllMemberPage" parameterType="pageVO" resultType="memberVO"> -->
-<!--   	SELECT * -->
-<!--   	  FROM -->
-<!--         (SELECT ROWNUM AS rn, a.* -->
-<!--            FROM (SELECT * -->
-<!--                    FROM users -->
-<!--                ORDER BY userid) a) -->
-<!--      WHERE rn BETWEEN #{pageSize} * (#{page} - 1) + 1 AND #{page} * #{pageSize} -->
-<!--   </select> -->
+  <select id="selectAllMemberPage" parameterType="pageVO" resultType="memberVO">
+  	SELECT *
+  	  FROM
+        (SELECT ROWNUM AS rn, a.*
+           FROM (SELECT *
+                   FROM users
+               ORDER BY userid) a)
+     WHERE rn BETWEEN #{pageSize} * (#{page} - 1) + 1 AND #{page} * #{pageSize}
+  </select>
   
-<!--   <select id="selectMemberTotalCnt" resultType="int"> -->
-<!--   	SELECT COUNT(*) -->
-<!--   	  FROM users -->
-<!--   </select> -->
+  <select id="selectMemberTotalCnt" resultType="int">
+  	SELECT COUNT(*)
+  	  FROM users
+  </select>
   
-<!--   <insert id="insertMember" parameterType="memberVO"> -->
-<!--   	INSERT INTO users VALUES(#{userid}, #{usernm}, #{pass}, SYSDATE, #{alias}, #{addr1}, #{addr2}, #{zipcode}, #{filename}, #{realFilename}) -->
-<!--   </insert> -->
+  <insert id="insertMember" parameterType="memberVO">
+  	INSERT INTO users VALUES(#{userid}, #{usernm}, #{pass}, SYSDATE, #{alias}, #{addr1}, #{addr2}, #{zipcode}, #{filename}, #{realFilename})
+  </insert>
   
-<!--   <delete id="deleteMember" parameterType="String"> -->
-<!--   	DELETE users WHERE userid = #{userid} -->
-<!--   </delete> -->
+  <delete id="deleteMember" parameterType="String">
+  	DELETE users WHERE userid = #{userid}
+  </delete>
   
-<!--   <update id="updateMember" parameterType="memberVO"> -->
-<!--   	UPDATE users  -->
-<!--   	   SET usernm = #{usernm} , pass =  #{pass} ,  -->
-<!--   	       reg_dt = SYSDATE, alias = #{alias},  -->
-<!--   	       addr1 = #{addr1}, addr2 = #{addr2},  -->
-<!--   	       zipcode = #{zipcode} , filename = #{filename} , realfilename = #{realFilename} -->
-<!--   	 WHERE userid = #{userid} -->
-<!--   </update> -->
+  <update id="updateMember" parameterType="memberVO">
+  	UPDATE users 
+  	   SET usernm = #{usernm} , pass =  #{pass} , 
+  	       reg_dt = SYSDATE, alias = #{alias}, 
+  	       addr1 = #{addr1}, addr2 = #{addr2}, 
+  	       zipcode = #{zipcode} , filename = #{filename} , realfilename = #{realFilename}
+  	 WHERE userid = #{userid}
+  </update>
   
 </mapper>

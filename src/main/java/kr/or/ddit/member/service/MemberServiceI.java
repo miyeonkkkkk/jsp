@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.common.model.PageVO;
 import kr.or.ddit.member.model.MemberVO;
 
 public interface MemberServiceI {
@@ -63,7 +64,7 @@ public interface MemberServiceI {
 	*
 	* </pre>
 	 */
-//	public Map<String, Object> selectAllMemberPage(PageVO pv);
+	public Map<String, Object> selectAllMemberPage(PageVO pageVo);
 	
 	/**
 	 * 회원 정보를 등록하는 메서드

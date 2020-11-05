@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.common.model.PageVO;
 import kr.or.ddit.db.MybatisUtil;
 import kr.or.ddit.member.model.MemberVO;
 
@@ -35,16 +36,16 @@ public class MemberDaoImpl implements MemberDaoI {
 		return memList;
 	}
 
-//	@Override
-//	public List<MemberVO> selectAllMemberPage(SqlSession sqlSession,PageVO pv) {
-//		// sqlSession 객체를 service에서 생성하여 넘겨 받기 때문에 굳이 변수에 담을 필요가 없다. close할 필요가 없기 때문
-////		List<MemberVO> memList = sqlSession.selectList("member.selectAllMemberPage", pv);
-//		return sqlSession.selectList("member.selectAllMemberPage", pv);
-//	}
+	@Override
+	public List<MemberVO> selectAllMemberPage(SqlSession sqlSession, PageVO pageVo) {
+//		 sqlSession 객체를 service에서 생성하여 넘겨 받기 때문에 굳이 변수에 담을 필요가 없다. close할 필요가 없기 때문
+		List<MemberVO> memList = sqlSession.selectList("member.selectAllMemberPage", pageVo);
+		
+		return memList;
+	}
 
 	@Override
 	public int selectMemberTotalCnt(SqlSession sqlSession) {
-//		int memberTotalCnt = sqlSession.selectOne("member.selectMemberTotalCnt");
 		return sqlSession.selectOne("member.selectMemberTotalCnt");
 	}
  

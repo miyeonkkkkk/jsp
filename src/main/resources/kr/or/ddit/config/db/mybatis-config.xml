@@ -7,8 +7,8 @@
 	<properties resource="kr/or/ddit/config/db/db.properties"/>
 
 	<typeAliases>
-		<typeAlias type="kr.or.ddit.member.model.MemberVO"
-			alias="memberVO" />
+		<typeAlias type="kr.or.ddit.member.model.MemberVO" alias="memberVO" />
+		<typeAlias type="kr.or.ddit.common.model.PageVO" alias="pageVO" />
 	</typeAliases>
 
 	<environments default="development">

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.ddit.common.model.PageVO;
 import kr.or.ddit.member.model.MemberVO;
 
 public interface MemberDaoI {
@@ -63,7 +64,7 @@ public interface MemberDaoI {
 	*
 	* </pre>
 	 */
-//	public List<MemberVO> selectAllMemberPage(SqlSession sqlSession,PageVO pv);
+	public List<MemberVO> selectAllMemberPage(SqlSession sqlSession,PageVO pageVo);
 	
 	/**
 	 * 회원의 전체 수

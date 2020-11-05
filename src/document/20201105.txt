@@ -42,6 +42,9 @@ spring : 기본적인 흐름에서 forward가 포함되어져 있다.
 
 <c:remove var="msg_s" scope="session"/> : session 삭제
 
+--------------------------------------------------------------
+jsp 프로젝트이 member와 관련된 화면, 기능 spring 프로젝트로 이관
+
 
 
 
