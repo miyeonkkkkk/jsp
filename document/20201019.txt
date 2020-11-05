@@ -15,7 +15,7 @@ ex) 로그인 여부 체크 -> servlet마다 중복되는 소스 발생 -> 유�
     
 Filter : 요청된 URL을 처리하는 servlet으로 요청 처리를 전달하기 전에
 		 보안, 로깅, 공통된 로직을 처리할 때 사용하는 모듈
-Servelt 생성방법 : HttpServelt 클래스를 상속(extends)
+Servlet 생성방법 : HttpServlet 클래스를 상속(extends)
 Filter 생성방법 : Filter interface 구현
 	Filter interface		servlet
 		init				  init
@@ -24,5 +24,3 @@ Filter 생성방법 : Filter interface 구현
 
 Servlet 등록 : web.xml - servlet, servlet-mapping / @WebServlet
 Filter 등록 : web.xml - filter, filter-mapping / @WebFilter
-
-life Cycle

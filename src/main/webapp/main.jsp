@@ -13,7 +13,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Jsp</title>
+<title>Spring</title>
 
 <!-- <script src="/js/jquery/jquery-1.12.4.js"></script> -->
 <%@include file="/layout/commonLib.jsp" %>

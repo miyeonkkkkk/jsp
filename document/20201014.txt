@@ -40,7 +40,7 @@ test = "${name == 'brown'} "
 test = "${name == 'brown'}"
 
 
-choose : java의 if-else if-else 와 같다.
+choose : java의 if-else 와 같다.
 <c:choose>
 	<c:when test=""> test 속성이 참일때 실행할 문장 </c:when>
 	<c:when test=""> test 속성이 참일때 실행할 문장 </c:when>
@@ -75,7 +75,7 @@ varStatus : 루프의 정보를 담고있는 변수
 EL scope 객체 : pageScope, requestScope(request객체에 저장된 속성들을 모아놓은 map), sessionScope, applicationScope
    기타 기본객체 : param, paramValues, header, headerValues, cookie, initParam, pageContext
    
-   <%= requeset.getContextPath() %>
+   <%= request.getContextPath() %>
 
 
 
