@@ -9,11 +9,13 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -21,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.common.model.PageVO;
 import kr.or.ddit.login.web.LoginController;
+import kr.or.ddit.member.model.JSRMemberVO;
 import kr.or.ddit.member.model.MemberVO;
+import kr.or.ddit.member.model.MemberVoValidator;
 import kr.or.ddit.member.service.MemberServiceI;
 
 @Controller
@@ -36,7 +40,7 @@ public class MemberController {
 	@RequestMapping("/memberListPage")
 	public String view(PageVO pageVo, Model model) {
 
-		// pageVo에 담긴 값이 없을 경우 초기화 해준다.
+		// pageVo에 담긴 값이 없을 경우 초기화 해준다. => 생성자 또는 getter를 통해 초기화 해줄수 있다.
 		if (pageVo.getPage() == 0) {
 			pageVo.setPage(1);
 		}
@@ -191,8 +195,19 @@ public class MemberController {
 	}
 
 	@RequestMapping(path = "/memberRegist", method = { RequestMethod.POST })
-	public String memberRegistPost(MemberVO memberVo, @RequestPart("rf") MultipartFile file) {
-		// MemberVO 객체의 realFilename 속성과 multipartFile의 name속성이 같을 경우 
+//	public String memberRegistPost(MemberVO memberVo,BindingResult br, @RequestPart("rf") MultipartFile file) {
+	public String memberRegistPost(@Valid MemberVO memberVo, BindingResult br, @RequestPart("rf") MultipartFile file) {
+
+		// 객체 검증하기
+//		new MemberVoValidator().validate(memberVo, br);
+		
+
+		// 에러가 발생 했다면(검증 통과 X) -> 사용자 등록 화면으로 이동
+		if (br.hasErrors()) {
+			return "member/memberRegist";
+		}
+
+		// MemberVO 객체의 realFilename 속성과 multipartFile의 name속성이 같을 경우
 		// memberVo 객체에 넣을려고 하기 때문에 오류가 난다. 그래서 다르게 지정 해주어야 한다.
 
 		// 파일명만 추출
@@ -203,7 +218,7 @@ public class MemberController {
 
 		// 확장자 추출
 		String filename = UUID.randomUUID().toString(); // 중복되지 않는 UUID를 반환
-		
+
 		// 파일 정보가 올바른지 간단하게 확인
 		if (file.getSize() > 0) {
 			filePath = "D:\\upload\\" + filename + "." + file.getOriginalFilename().split("\\.")[1];
@@ -220,7 +235,7 @@ public class MemberController {
 		memberVo.setFilename(filePath);
 
 		int insertCnt = memberService.insertMember(memberVo);
-		
+
 		if (insertCnt > 0) { // 1건이 입력되었을 때 : 정상 - member 페이지로 이동
 			return "redirect:/member/memberListPage";
 
@@ -228,5 +243,5 @@ public class MemberController {
 			return "member/memberRegist";
 		}
 	}
-	
+
 }

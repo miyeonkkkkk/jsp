@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +70,7 @@ function initData(){
 					<!-- 파일전송은 post 방식만 가능하다. -->
 					<div class="form-group">
 						<!-- label에 for은 스크린리더가 읽어주는 부분이다.(시각장애인들을 위한 기능) -->
-						<label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
+						<label for="userProfile" class="col-sm-2 control-label">사용자 사진</label>
 						<div class="col-sm-10">
 							<input type="file" name="rf" />
 						</div>
@@ -86,6 +87,8 @@ function initData(){
 						<label for="usernm" class="col-sm-2 control-label">사용자 이름</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="usernm" name="usernm" placeholder="사용자 이름" value="${param.usernm }"/>
+							<!-- 해당 path에 존재하는 메세제지가 있으면 보여주고 없으면 그냥 넘어간다. -->
+							<span style="color:red;"><form:errors path="memberVO.usernm" /></span>
 						</div>
 					</div>
 					<div class="form-group">

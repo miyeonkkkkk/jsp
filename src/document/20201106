@@ -1,0 +1,108 @@
+마이그레이션 : 소스를 다른 버전으로 변환 
+ms-sql server ==> oracle
+servlet ==> spring controller
+
+Spring에서 컨트롤러 메소드 인자 설정시 발생할 수 있는 문제점
+1. primitive type (int, double,....)
+	메소드(int page)
+	==> page 파라미터가 반드시 존재 해야함
+	==> null처리가 안되기 때문
+
+개발시 고려 사항 : 해당 파라미터가 반드시 전송이 되는가!!!
+	-> 전송 될 경우 : 별다른 조치 없이 사용
+	-> 전송이 안될 경우 : 1. @RequestParam(name="파라미터명", required=false, defaultValue="") - 어떤 파라미터를 받을지 설정하고 값이 반드시 존재하지 않으면 기본값으로 대체
+					 2. command 객체를 사용 -> 필드에 선언된 변수가 primitive type일 경우 기본값으로 초기화를 해준다. => int page;일 경우 page=0으로 초기화
+					 	** primitive type의 필드는 객체 생성시 자동으로 초기 값으로 할당이 된다.
+					 	 단, local 변수는 제외 => 자동 초기화 되지 않으므로 값을 초기화 해주지 않으면 사용하지 못한다.
+					 	 
+	mybatis 에서 null 처리 => #{userid, jdbcType.VARCHAR} -> 문자열이라고 표현 해주면 오류가 나지 않는다.
+		** 들어온 값이 null일 경우에 mybais에서 오류가 나지 않게 type을 알려주어 오류 처리를 해준다. => table에는 null값으로 들어간다.
+	
+	=> mybatis 오류가 나오지 않을 경우
+	<root level="DEBUG">
+       <appender-ref ref="STDOUT" />
+   	</root>
+   	
+========================================================
+Spring Validator, JSR 303(빈 유효성 검사) 사용이유 : 객체 검증을 위해서
+ex) userid 파라미터가 없을 때는 사용자 리스트로 이동한다.
+	userid 파라미터가 없을 때는 'brown' 사용자를 보여준다.
+
+Validator 사용 방법
+Validator interface 구현 => 검증할 클래스를 구현
+controller method에서 객체 검증할 파라미터뒤에 파라미터로 설정한다.
+Validate 메소드에서 유효성 체크 로직을 직접 작성한다.
+
+JSR 303(빈 유효성 검사)
+빈으로 등록 후, 어노테이션이 붙은 파라미터들을 자동으로 검사해준다.
+
+=========================================================
+스프링 객체 검증
+1. Spring Validator
+	1. 스프링 프레임워크에서 제공하는 Validator interface를 구현
+		- supports() : 검증하려고 하는 객체가 해당 validator에서 검증할 수 있는지 여부를 반환(boolean)
+		- validate() : 검증 로직을 작성 => 개발자가 로직을 직접 구현
+	2. Controller 메소드에 검증하려고 하는 커맨드 객체 바로 뒤에 BindingResult 객체를 인자로 선언 => 순서를 반드시 지켜야 한다.☆☆☆
+		- 스프링 프레임워크에 메소드 인자 구성이 비교적 자유롭지만,
+		BindingResult 객체(Errors를 상속받는 관계이다.)는 검증을 하려고 하는 커맨드 객체 뒤에 선언이 되어 있어야 한다.
+		
+	에러메세지를 properties파일로 설정할 수 있다.
+	## 에러코드[.객체].필드명=메세지 / [] 생략가능
+	
+	=> Spring 에서 제공하는 taglib : 이걸 통해서 EL이나 JSTL을 사용하지 않아도 메세지 출력이 가능하다.
+	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+	
+	<!-- 해당 path에 존재하는 메세제지가 있으면 보여주고 없으면 그냥 넘어간다. -->
+	memberVo객체에 있는 usernm필드가 오류가 발생했으면 메세지 출력
+	<form:errors path="memberVO.usernm"/> => memberVO는 클래스명에서 앞단어만 소문자로..
+		
+2. JSR303 유효성 검증
+	1. Command 객체 인자 앞에 @Valid 어노테이션 적용
+	2. Command 객체의 필드에 검증 어노테이션을 적용
+	3. Command 객체 뒤에 BindingResult 객체를 인자로 선언
+	   객체 검증의 결과가 bindingResult 객체에 담긴다.
+	   ==> 개발자가 직접 검증과 관련된 메소드를 호출하지 않는다.
+	   
+	   Spring Validator와 비교 ==> 복잡한 검증은 불가능
+	   @Max, @Min, @Size, @Pattern(정규식) 등 간단한 형태만 가능
+	   => 어노테이션명이 에러코드가 된다.
+	   
+	   복잡한 형태 : 네이버에서 비밀번호 변경시 기존에 사용하던 비밀번호를 사용하지 못하게끔 검증
+	   
+-----------------------------------------------------------------------------
+예외 처리 방법
+1. @ExcpetionHandler 등록 - Controller마다 등록해야 하기 때문에 잘 안쓴다.
+	Controller class에 @ExceptionHandler 어노테이션이 적용된 메소드를 생성
+	어노테이션 속성으로 해당 메소드에서 처리할 예외에 대해 선언
+	해당 예외가 발생시 @ExceptionHandler 어노테이션이 적용된 메소드가 호출된다.
+
+2. @ContollerAdvice - Controller 공통 처리 : 공통의 예외처리 클래스로 분리
+	클래스에 @ContollerAdvice 어노테이션 적용
+	아래와 같이 컨테이너에게 등록한 어노테이션을 알려주어야 한다.
+	<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	
+	- 예외 처리를 할 클래스를 생성, 클래스에 @ControllerAdvice 어노테이션 적용
+	- 해당 크랠스이 예외처리 메소드는 @ExceptionHandler 어노테이션을 적용, 처리 가능한 예외 타입에 대해 등록
+	- @ContollerAdvice 어노테이션이 적용된 클래스를 스캔할 수 있도록 Component-scan 엘레멘트를 수정
+	
+3. @ResponseStatus - 다른 응답코드 설정한다. : 사용자 정의 예외가 발생시 스프링 프레임워크에게 응답코드를 설정하는 방법
+	
+404 발생 시 : 요청주소 또는 jsp주소 확인
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

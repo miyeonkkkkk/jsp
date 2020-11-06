@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class MemberVO {
+public class JSRMemberVO {
 
 	private String userid;
 	private String pass;
@@ -24,7 +24,7 @@ public class MemberVO {
 	
 	
 	
-	public MemberVO(String userid, String pass, String usernm, String alias, String addr1, String addr2, String zipcode,
+	public JSRMemberVO(String userid, String pass, String usernm, String alias, String addr1, String addr2, String zipcode,
 			String filename, String realFilename) {
 		this.userid = userid;
 		this.pass = pass;
@@ -36,7 +36,7 @@ public class MemberVO {
 		this.filename = filename;
 		this.realFilename = realFilename;
 	}
-	public MemberVO(){
+	public JSRMemberVO(){
 		
 	}
 	
@@ -130,7 +130,7 @@ public class MemberVO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MemberVO other = (MemberVO) obj;
+		JSRMemberVO other = (JSRMemberVO) obj;
 		if (addr1 == null) {
 			if (other.addr1 != null)
 				return false;

@@ -13,5 +13,15 @@
 	
 	<context:annotation-config/>
 	
+	<!-- messageSource 등록 : bean id는 messageSource로 정해져 있다. 
+		value에서 번들메세지_언어코드_국가코드.properties ==> 번들메세지 부분만을 말한다.
+	-->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:kr/or/ddit/message/msg</value>
+			</list>
+		</property>		
+	</bean>
 
 </beans>
