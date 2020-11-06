@@ -15,6 +15,14 @@
 	
 	<context:annotation-config/>
 	
+	<!-- viewName이 빈에 등록한 id와 같으면 해당 view를 사용한다. -->
+	<bean id="profileImgDownloadView" class="kr.or.ddit.mvc.view.ProfileImgDownloadView"/>
+	<bean id="profileImgView" class="kr.or.ddit.mvc.view.ProfileImgView"/>
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>		
+	</bean>
+	
 	<!-- jsp를 처리할 viewResolves -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- prefix : 접두어, suffix : 접미어 
@@ -26,6 +34,7 @@
 			==> /WEB-INF/views/login/view.jsp
 			
 		-->
+		<property name="order" value="1" />
 		<property name="prefix" value="/WEB-INF/views/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
@@ -52,6 +61,8 @@
 	  	- mappring : 가상의 경로이다
 	-->
 	<mvc:resources mapping="/resources/**" location="/WEB-INF/views/" />
+	
+	
 	
 	
 	

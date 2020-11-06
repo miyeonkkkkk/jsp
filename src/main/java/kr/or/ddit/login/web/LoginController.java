@@ -45,6 +45,25 @@ public class LoginController {
 		return rangers;
 	}
 	
+	// http://localhost/login/json
+	// ranger() ==> Model 객체에 rangers라는 이름의 속성이 저장됨 ==> json()
+	// Model 객체 속성이 존재(rangers)
+	@RequestMapping("/json")
+	public String json() {
+		
+		return "jsonView"; // <bean id="jsonView" class="MappingJackson2JsonView"/>
+		
+//		 view resolver를 2개 등록함.
+//		 1. beanNameViewResolver
+//				- viewName에 해당하는 빈이 있는 찾음
+//			 만약 해당하는 빈(View)이 있으면 해당 View 결과를 생성
+//			 beanNameViewResolver에서 찾지 못했을 경우 후순위로 넘어간다.
+//		 2. internalResourceResolver
+//				- prefix, surffix 설정에 따라 /WEB-INF/views/jsonView.jsp
+//				internalResourceResolver는 view이름에 해당하는 자원이 존재하는지, 존재하지 않는지 체크하지 않고
+//				무조건 forwarding 시킨다.
+//				** 그래서 viewResolver 우선순위를 가장 후순위로 미뤄야 한다.
+	}
 	
 	
 	// view name => Controller는 문자열을 반환한다.

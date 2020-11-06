@@ -39,7 +39,6 @@ public class MemberController {
 
 	@RequestMapping("/memberListPage")
 	public String view(PageVO pageVo, Model model) {
-
 		// pageVo에 담긴 값이 없을 경우 초기화 해준다. => 생성자 또는 getter를 통해 초기화 해줄수 있다.
 		if (pageVo.getPage() == 0) {
 			pageVo.setPage(1);

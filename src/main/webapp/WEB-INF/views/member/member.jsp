@@ -21,11 +21,11 @@ $(document).ready(function(){
 	$('#updateBtn').on('click', function(){
 // 		userid = $('#userid').text();
 // 		console.log(userid);
-		document.location = "/member/memberUpdate?userid=${mv.userid }";
+		document.location = "/member/memberUpdate?userid=${memberVo.userid }";
 	});
 
 	$('#profileDownBtn').on('click', function(){
-		document.location = "/member/profileDownload?userid=${mv.userid }";
+		document.location = "/member/profileDownload?userid=${memberVo.userid }";
 	});
 	
 })

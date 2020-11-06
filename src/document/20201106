@@ -100,6 +100,74 @@ jsp : 404, 500 예외 페이지 등록
   	url에서 찾아라
 	- mappring : 가상의 경로이다
 <mvc:resources mapping="/resources/**" location="/WEB-INF/views/" />	
+/** : 여러개의 폴더구조가 올수 있다.
+=======================================================================
+필터와 인터셉터의 차이
+- 공통점 : 사전,사후 작업을 처리한다. / 공통적인 로직을 처리한다.
+- 필터는 스프링에서 관리하지 않고 인터셉터는 스프링에서 관리하는 빈이다.
+- 필터는 DispatcherServlet 실행 전에 처리된다.
+- 필터는 스프링컨테이너에 포함되지 않기 때문에 DI가 불가능하다.
+- 인터셉터는 스프링 컨테이너에 포함되어 있기 때문에 DI가 가능하다.
+- 인터셉터는 Controller 실행 전에 처리된다.
+
+- 필터는 Filter 인터페이스를 구현, 인터셉터는 HandlerInterceptorAdapter클래스를 상속
+- 필터는 chain.doFilter() 를 통해서 사전과 사후 작업이 나뉜다.
+- 인터셉터는 preHandle(), postHandler()메소드로 사전, 사후 작업이 나눤다.
+- 인터셉터는 필터와 다르게 배제할 url요청도 설정할 수 있다. => <mvc:exclude-mapping path=""/>
+<!-- interceptor 설정 -->
+<!-- 어떤 url로 요청이 왔을 때 실행 하겠다. -->
+<mvc:interceptors>
+	<mvc:interceptor >
+		<mvc:mapping path="/**"/>
+		<bean class="kr.or.ddit.mvc.interceptor.PerformanceCheckInterceptor"/>
+	</mvc:interceptor>
+</mvc:interceptors>
+
+- Controller method 처리 속도
+스프링에서는 기본적으로 싱글톤이기 때문에 request객체에 담아서 보낸다. => 인터셉터 메소드 사이에서 데이터를 주고 받을 시에
+	
+true : 다음 인터셉터 호출, 인터셉터가 없을 경우 handler(controller)
+false : 요청 처리를 멈춘다. = controller까지 가지 않는다.
+
+================================================================================================
+<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>	=> order를 통해 value값이 낮을 수록 우선순위가 높다.
+</bean>
+=> 우선순위를 지정하여 View를 처리한다.
+
+json : 데이터를 간단하게 주고 받을수 있다.
+파라미터로 객체를 전달 할 수 없다. => 문자열로 변환한 후 전송 (JSON.stringify() 메소드 활용)
+문자열을 객체로 변환 => JSON.parse() 메소드 활용
+
+jsonView : json으로 처리해준다. => 문자열로 변환
+
+View : Model에 담겨진 객체를 렌더링 한다.
+
+View와 로직을 떨어뜨리기 위해 있는 것이 Controller이다. 즉 역할을 분리한것 뿐이다.
+
+ view resolver를 2개 등록함.
+1. beanNameViewResolver
+	- viewName에 해당하는 빈이 있는 찾음
+ 만약 해당하는 빈(View)이 있으면 해당 View 결과를 생성
+ beanNameViewResolver에서 찾지 못했을 경우 후순위로 넘어간다.
+2. internalResourceResolver
+	- prefix, surffix 설정에 따라 /WEB-INF/views/jsonView.jsp
+	internalResourceResolver는 view이름에 해당하는 자원이 존재하는지, 존재하지 않는지 체크하지 않고
+	무조건 forwarding 시킨다.
+** 그래서 viewResolver 우선순위를 가장 후순위로 미뤄야 한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
