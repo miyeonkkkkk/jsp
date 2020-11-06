@@ -11,11 +11,11 @@ public class ExceptionAdvice {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 	
 	@ExceptionHandler({ArithmeticException.class})
-	public String handler() { // 해당 Controller 안에서만 유효하다.
+	public String handler() { 
 		logger.debug("ExceptionController.handler()");
 		
 		//에러를 처리할 화면
 		return "exception/arithmetic";
 	}
-
+	
 }
