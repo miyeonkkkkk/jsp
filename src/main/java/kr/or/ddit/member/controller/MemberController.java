@@ -60,6 +60,56 @@ public class MemberController {
 
 		return "member/memberList";
 
+//		return "tiles/member/memberListContent";
+
+	}
+
+	@RequestMapping("/listAjaxPage")
+	public String listAjaxPage() {
+		// Ajax를 이용해서 회원들의 리스트를 불러온다.
+		return "tiles/member/listAjaxPage";
+	}
+
+	// 페이지 요청(/list 와 다르게 page, pageSize 파라미터가 반드시 존재한다는 가정으로 작성)
+	@RequestMapping("/listAjax")
+	public String listAjax(PageVO pageVo, Model model) { // listAjaxPage에서 ajax요청에 대해서 파라미터가 잘 갔는지 확인하기
+
+		// 바인딩 확인 logger
+		logger.debug("pageVo : {}", pageVo);
+
+		Map<String, Object> map = memberService.selectAllMemberPage(pageVo);
+
+		int totalCnt = (int) map.get("totalCnt");
+		int pages = (int) Math.ceil((double) totalCnt / pageVo.getPageSize());
+		logger.debug("pageSize : {}", pageVo.getPageSize());
+
+		model.addAttribute("memberList", map.get("memberList"));
+		model.addAttribute("pages", pages);
+//		model.addAttribute("pageVo", pageVo);
+
+		// 모델에 있는 속성을 json 문자열로 변환
+		return "jsonView";
+	}
+
+	// HTML로 데이터 받기
+	@RequestMapping("/listAjaxHTML")
+	public String listAjaxHTML(PageVO pageVo, Model model) { // listAjaxPage에서 ajax요청에 대해서 파라미터가 잘 갔는지 확인하기
+
+		// 바인딩 확인 logger
+		logger.debug("pageVo : {}", pageVo);
+
+		Map<String, Object> map = memberService.selectAllMemberPage(pageVo);
+
+		int totalCnt = (int) map.get("totalCnt");
+		int pages = (int) Math.ceil((double) totalCnt / pageVo.getPageSize());
+		logger.debug("pageSize : {}", pageVo.getPageSize());
+
+		model.addAttribute("memberList", map.get("memberList"));
+		model.addAttribute("pages", pages);
+		// model.addAttribute("pageVo", pageVo);
+
+		// 응답을 html => jsp로 생성
+		return "member/listAjaxHTML";
 	}
 
 	@RequestMapping("/getMember")
@@ -70,6 +120,29 @@ public class MemberController {
 		model.addAttribute("memberVo", memberVo);
 
 		return "member/member";
+
+//		return "tiles.member.memberContent";
+	}
+
+	@RequestMapping("/getMemberAjax")
+	public String getMemberAjax() {
+		
+		// Ajax를 이용해서 회원의 정보를 불러온다.
+		return "tiles/member/memberAjax";
+
+//		return "tiles.member.memberContent";
+	}
+
+	@RequestMapping("/memberAjax")
+	public String memberAjax(String userid, Model model) {
+
+		MemberVO memberVo = memberService.getMember(userid);
+
+		model.addAttribute("memberVo", memberVo);
+
+		return "member/memberAjaxHTML";
+
+//		return "tiles.member.memberContent";
 	}
 
 	@RequestMapping("/profileImg")
@@ -181,8 +254,11 @@ public class MemberController {
 		if (updateCnt > 0) { // 1건이 입력되었을 때 : 정상 - member 페이지로 이동
 			return "redirect:/member/getMember?userid=" + memberVo.getUserid();
 
+//			return "tiles.member.memberUpdateContent";
+
 		} else { // 1건이 아닐 때 : 비정상 - 사용자가 데이터를 다시 입력할 수 있도록 등록페이지로 이동
 			return "member/memberUpdate";
+
 		}
 	}
 
@@ -190,6 +266,8 @@ public class MemberController {
 	public String memberRegistGet() {
 
 		return "member/memberRegist";
+
+//		return "tiles.member.memberRegistContent";
 
 	}
 
@@ -199,11 +277,12 @@ public class MemberController {
 
 		// 객체 검증하기
 //		new MemberVoValidator().validate(memberVo, br);
-		
 
 		// 에러가 발생 했다면(검증 통과 X) -> 사용자 등록 화면으로 이동
 		if (br.hasErrors()) {
 			return "member/memberRegist";
+
+//			return "tiles.member.memberRegistContent";
 		}
 
 		// MemberVO 객체의 realFilename 속성과 multipartFile의 name속성이 같을 경우
@@ -237,6 +316,8 @@ public class MemberController {
 
 		if (insertCnt > 0) { // 1건이 입력되었을 때 : 정상 - member 페이지로 이동
 			return "redirect:/member/memberListPage";
+
+//			return "tiles.member.memberRegistContent";
 
 		} else { // 1건이 아닐 때 : 비정상 - 사용자가 데이터를 다시 입력할 수 있도록 등록페이지로 이동
 			return "member/memberRegist";

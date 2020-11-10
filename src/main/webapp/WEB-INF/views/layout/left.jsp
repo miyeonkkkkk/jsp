@@ -3,5 +3,6 @@
 <ul class="nav nav-sidebar">
 	<li class="active"><a href="#">Main <span class="sr-only">(current)</span></a></li>
 	<li class="active"><a href="${cp }/member/memberListPage">사용자</a></li>
+	<li class="active"><a href="${pageContext.request.contextPath}/member/listAjaxPage">사용자 ajax</a></li>
 	<li class="active"><a href="${pageContext.request.contextPath}/jobsServelet">jobs</a></li>
 </ul>

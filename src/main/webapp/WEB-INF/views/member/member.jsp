@@ -122,7 +122,8 @@ $(document).ready(function(){
 						<label for="reg_dt" class="col-sm-2 control-label">등록일자</label>
 						<div class="col-sm-10">
 <%-- 							<fmt:formatDate value="${memberVo.reg_dt }" pattern="yyyy-mm-dd"/> --%>
-							<label class="control-label"><fmt:formatDate value="${memberVo.reg_dt }" pattern="yyyy-MM-dd"/></label>
+<%-- 							<label class="control-label"><fmt:formatDate value="${memberVo.reg_dt }" pattern="yyyy-MM-dd"/></label> --%>
+							<label class="control-label">${memberVo.reg_dt}</label>
 						</div>
 					</div>
 
