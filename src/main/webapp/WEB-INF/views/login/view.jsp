@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -73,7 +74,7 @@
 		}
 
 		// sign in 버튼이 클릭 되었을 때
-		$('#sign').on('click', function(){
+		$('#signIn').on('click', function(){
 			// 1. Remember me 체키박스가 체크 되어 있으면
 			if($('#chk').prop('checked')){
 				// 2. REMEMBERME 쿠키를 Y로 설정
@@ -108,18 +109,23 @@
     <div class="container">
 
       <form class="form-signin" action="${pageContext.request.contextPath}/login/process" method="post" id="ff">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
+<!--         <h2 class="form-signin-heading">Please sign in</h2> -->
+<!--         <label for="inputEmail" class="sr-only">Email address</label> -->
+		 <h2 class="form-signin-heading"><spring:message code="login.signin"/></h2>
+        <label for="inputEmail" class="sr-only"><spring:message code="login.userid"/></label>
         <input type="email" id="inputEmail" name="userid" class="form-control" placeholder="Email address" required autofocus value="brown">
-        <label for="inputPassword" class="sr-only">Password</label>
+<!--         <label for="inputPassword" class="sr-only">Password</label> -->
+		<label for="inputPassword" class="sr-only"  ><spring:message code="login.password"/></label>
         <input type="password" id="inputPassword" name="pass" class="form-control" placeholder="Password" required value="brownPass">
         <div class="checkbox">
           <label>
-            <input type="checkbox" value="remember-me" id="chk"> Remember me
+<!--             <input type="checkbox" value="remember-me" id="chk"> Remember me -->
+            <input type="checkbox" value="remember-me" name="remember" > <spring:message code="login.rememberme"/>
           </label>
         </div>
         <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> -->
-        <button class="btn btn-lg btn-primary btn-block" type="button" id="sign">Sign in</button>
+<!--         <button class="btn btn-lg btn-primary btn-block" type="button" id="sign">Sign in</button> -->
+        <button class="btn btn-lg btn-primary btn-block" type="button" id="signIn"><spring:message code="login.signin"/></button>
       </form>
 
     </div> <!-- /container -->

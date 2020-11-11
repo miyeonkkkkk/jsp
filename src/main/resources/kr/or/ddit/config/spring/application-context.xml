@@ -99,6 +99,9 @@
 	 	</mvc:interceptor>
 	 </mvc:interceptors>
 	 
+	 <!-- excel poi 사용 -->
+	 <bean id="excelView" class="kr.or.ddit.mvc.view.ExcelDownloadView"/>
+	 
 	 
 	
 	

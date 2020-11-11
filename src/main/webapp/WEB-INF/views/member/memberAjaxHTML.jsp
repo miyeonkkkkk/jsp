@@ -5,7 +5,7 @@
 <div class="form-group">
 	<label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
 	<div class="col-sm-10">
-		<img src="${cp}/profileImgView?userid=${memberVo.userid }" /><br>
+		<img src="${cp}/member/profileImg?userid=${memberVo.userid }" /><br>
 		<button type="button" class="btn btn-default" id="profileDownBtn">다운로드
 			: ${memberVo.realFilename }</button>
 

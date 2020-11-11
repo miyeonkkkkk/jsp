@@ -58,9 +58,9 @@ public class MemberController {
 		model.addAttribute("memberList", map.get("memberList"));
 		model.addAttribute("pages", pages);
 
-		return "member/memberList";
+//		return "member/memberList";
 
-//		return "tiles/member/memberListContent";
+		return "tiles/member/memberListContent";
 
 	}
 
@@ -119,9 +119,9 @@ public class MemberController {
 
 		model.addAttribute("memberVo", memberVo);
 
-		return "member/member";
+//		return "member/member";
 
-//		return "tiles.member.memberContent";
+		return "tiles.member.memberContent";
 	}
 
 	@RequestMapping("/getMemberAjax")
@@ -210,7 +210,9 @@ public class MemberController {
 
 		model.addAttribute("memberVo", memberVo);
 
-		return "member/memberUpdate";
+//		return "member/memberUpdate";
+		
+		return "tiles.member.memberUpdateContent";
 
 	}
 
@@ -257,7 +259,9 @@ public class MemberController {
 //			return "tiles.member.memberUpdateContent";
 
 		} else { // 1건이 아닐 때 : 비정상 - 사용자가 데이터를 다시 입력할 수 있도록 등록페이지로 이동
-			return "member/memberUpdate";
+//			return "member/memberUpdate";
+			
+			return "tiles.member.memberUpdateContent";
 
 		}
 	}
@@ -265,9 +269,9 @@ public class MemberController {
 	@RequestMapping(path = "/memberRegist", method = { RequestMethod.GET })
 	public String memberRegistGet() {
 
-		return "member/memberRegist";
+//		return "member/memberRegist";
 
-//		return "tiles.member.memberRegistContent";
+		return "tiles.member.memberRegistContent";
 
 	}
 
@@ -280,9 +284,9 @@ public class MemberController {
 
 		// 에러가 발생 했다면(검증 통과 X) -> 사용자 등록 화면으로 이동
 		if (br.hasErrors()) {
-			return "member/memberRegist";
+//			return "member/memberRegist";
 
-//			return "tiles.member.memberRegistContent";
+			return "tiles.member.memberRegistContent";
 		}
 
 		// MemberVO 객체의 realFilename 속성과 multipartFile의 name속성이 같을 경우
@@ -320,7 +324,9 @@ public class MemberController {
 //			return "tiles.member.memberRegistContent";
 
 		} else { // 1건이 아닐 때 : 비정상 - 사용자가 데이터를 다시 입력할 수 있도록 등록페이지로 이동
-			return "member/memberRegist";
+//			return "member/memberRegist";
+			
+			return "tiles.member.memberRegistContent";
 		}
 	}
 

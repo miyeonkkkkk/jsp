@@ -2,7 +2,10 @@ package kr.or.ddit.member.dao;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.common.model.PageVO;
@@ -12,14 +15,17 @@ import kr.or.ddit.member.model.MemberVO;
 @Repository("memberRepository")
 public class MemberDaoImpl implements MemberDaoI {
 	
+	@Resource(name = "sqlSessionTemplate")
+	private SqlSessionTemplate sqlSession;
+	
 	@Override
 	public MemberVO getMember(String userid) {
 		
-		SqlSession sqlSession = MybatisUtil.getSqlSession();
+//		SqlSession sqlSession = MybatisUtil.getSqlSession();
 		
 		MemberVO memberVo = sqlSession.selectOne("member.getMember", userid);
 		
-		sqlSession.close();
+//		sqlSession.close();
 		
 		return memberVo;
 	}
@@ -27,11 +33,11 @@ public class MemberDaoImpl implements MemberDaoI {
 	@Override
 	public List<MemberVO> selectAllMember() {
 		
-		SqlSession sqlSession = MybatisUtil.getSqlSession();
+//		SqlSession sqlSession = MybatisUtil.getSqlSession();
 		
 		List<MemberVO> memList = sqlSession.selectList("member.selectAllMember");
 		
-		sqlSession.close();
+//		sqlSession.close();
 		
 		return memList;
 	}
@@ -39,9 +45,9 @@ public class MemberDaoImpl implements MemberDaoI {
 	@Override
 	public List<MemberVO> selectAllMemberPage(SqlSession sqlSession, PageVO pageVo) {
 //		 sqlSession 객체를 service에서 생성하여 넘겨 받기 때문에 굳이 변수에 담을 필요가 없다. close할 필요가 없기 때문
-		List<MemberVO> memList = sqlSession.selectList("member.selectAllMemberPage", pageVo);
+//		List<MemberVO> memList = sqlSession.selectList("member.selectAllMemberPage", pageVo);
 		
-		return memList;
+		return sqlSession.selectList("member.selectAllMemberPage", pageVo);
 	}
 
 	@Override
@@ -50,37 +56,26 @@ public class MemberDaoImpl implements MemberDaoI {
 	}
  
 	public int insertMember(MemberVO mv) {
-		SqlSession sqlSession = MybatisUtil.getSqlSession();
+//		SqlSession sqlSession = MybatisUtil.getSqlSession();
 		int insertCnt = 0;
 		
-		try {
-			insertCnt = sqlSession.insert("member.insertMember", mv);
-		}catch (Exception e) {
-		
-		}
-		
-		if(insertCnt > 0) {
-			sqlSession.commit();
-		}else {
-			sqlSession.rollback();
-		}
-		sqlSession.close();
+		insertCnt = sqlSession.insert("member.insertMember", mv);
 		
 		return insertCnt;
 	}
 
 	@Override
 	public int deleteMember(String userid) {
-		SqlSession sqlSession = MybatisUtil.getSqlSession();
+//		SqlSession sqlSession = MybatisUtil.getSqlSession();
 		
-		int deletetCnt = sqlSession.insert("member.deleteMember", userid);
+		int deletetCnt = sqlSession.delete("member.deleteMember", userid);
 		
 		if(deletetCnt > 0) {
-			sqlSession.commit();
+//			sqlSession.commit();
 		}else {
-			sqlSession.rollback();
+//			sqlSession.rollback();
 		}
-		sqlSession.close();
+//		sqlSession.close();
 		
 		return deletetCnt;
 		
@@ -88,21 +83,18 @@ public class MemberDaoImpl implements MemberDaoI {
 
 	@Override
 	public int updateMember(MemberVO mv) {
-		SqlSession sqlSession = MybatisUtil.getSqlSession();
+//		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
 		int updateCnt = 0;
 		
-		try {
-			updateCnt = sqlSession.insert("member.updateMember", mv);
-		}catch (Exception e) {
-		
-		}
+		updateCnt = sqlSession.update("member.updateMember", mv);
 		
 		if(updateCnt > 0) {
-			sqlSession.commit();
+//			sqlSession.commit();
 		}else {
-			sqlSession.rollback();
+//			sqlSession.rollback();
 		}
-		sqlSession.close();
+//		sqlSession.close();
 		
 		return updateCnt;
 	}

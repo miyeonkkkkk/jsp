@@ -3,6 +3,7 @@ package kr.or.ddit.login.web;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,10 +73,20 @@ public class LoginController {
 	// 클래스에 등록된 url이 나오고 메소드에 등록된 url이 나온다.
 	// localhost/login(클래스 url)/view(메소드 url) => 요청 => 해당 메소드가 실행
 	// 요청 메소드가 get일 때만 처리
+//	@RequestMapping(path = "/view", method = RequestMethod.GET)
+//	public String getView(){
+//		logger.debug("LoginController.getView()");
+//		
+//		return "login/view";
+//	}
+	
 	@RequestMapping(path = "/view", method = RequestMethod.GET)
-	public String getView(){
+	public String getView(Locale locale){
 		logger.debug("LoginController.getView()");
 		
+		logger.debug("locale : {}", locale);
+
+		//응답은 jsp그대로 사용 => spring에서는 관습적으로 WEB-INF에 저장 -> 사용자의 jsp접근을 막겠다.
 		return "login/view";
 	}
 	
@@ -88,6 +100,7 @@ public class LoginController {
 	@RequestMapping(path = "/process", params = {"userid"})
 	public String process(String userid, String pass, MemberVO memberVo,
 							HttpSession session, Model model,
+						  @RequestBody String body,
 						  @RequestParam(name = "email", required = false, defaultValue = "brown@line.kr") String user_id) {
 		// Spring 에서는 request, session객체를 인자로 넣어줄수 있다.
 		// application 객체는 안된다.
@@ -99,6 +112,7 @@ public class LoginController {
 		
 		logger.debug("memberVO : {}", dbMember);
 		logger.debug("user_id : {}", user_id);
+		logger.debug("requestBody: {}", body);
 		
 		
 		// db에서 조회한 사용자 정보가 존재하면 ==> main.jsp

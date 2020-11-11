@@ -20,7 +20,10 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:kr/or/ddit/config/spring/root-context.xml</param-value>
+		<param-value>classpath:kr/or/ddit/config/spring/root-context.xml
+					 classpath:kr/or/ddit/config/spring/aop-context.xml
+					 classpath:kr/or/ddit/config/spring/datasource-context.xml
+		</param-value>
 	</context-param>
 
 	<!-- 스프링 자식 컨테이너 생성 : dispatcherServlet(직접 생성 안함)을 통해 생성 : controller -->
@@ -65,11 +68,20 @@
 		<error-code>500</error-code>
 		<location>/WEB-INF/views/error/500/500.html</location>
 	</error-page>
-
-
-
-
-
+	
+	<!--   <servlet> -->
+<!--   	<servlet-name>webServlet</servlet-name> -->
+<!--   	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> -->
+<!--   	<init-param> -->
+<!--   		<param-name>contextConfigLocation</param-name> -->
+<!--   		<param-value>classpath:kr/or/ddit/config/spring/application-context.xml</param-value> -->
+<!--   	</init-param> -->
+<!--   	<load-on-startup>2</load-on-startup> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--   	<servlet-name>webServlet</servlet-name> -->
+<!--   	<url-pattern>*.do</url-pattern> -->
+<!--   </servlet-mapping> -->
 
 
 

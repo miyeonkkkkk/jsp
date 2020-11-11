@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- tx : 트랜잭션의 약자 트랜잭션 설정시에 이용 -->
+	<!-- 트랜잭션 적용 : service의 메소드에 적용 
+		1. 트랜잭션 매니저 등록 - DataSourceTransactionManager : spring에서 제공
+			- dataSource에 대한 정보가 필요
+				** 스프링 빈의 선언 순서는 중요하지 않다. - spring container가 알아서 처리해준다.
+		2. advisor 등록 : element 이름은 - advice
+		3. aop 설정 : pointcut
+	-->
+	<!-- 다른 파일에 있는 빈이더라도 사용이 가능하다. -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<tx:advice id="txAdvisor" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 여러개의 메소드 등록 가능 
+				tx:method name : 트랜잭션을 적용할 메소드의 이름, 패턴 적용 
+								 select*
+								 get*
+								 insert*
+								 *
+				propagation : 실행이 될 때 트랜잭션이 필요한지 여부를 나타낸다.
+				read-only : select만 할시에는 읽기만 하기 때문에 true로 설정하면 속도가 올라간다.
+				rollback-for : 예외를 지정하여 rollback을 적용할 수 있게 한다. -> 선언적 트랜잭션이기 때문에 실패시 자동 rollback
+				timeout : 일정 시간 내에 처리가 되면 정상, 시간을 넘을 경우 자동으로 rollback처리를 한다.
+				no-rollback-for : 해당 처리에서 대해서는 rollback하지 않겠다. 예외 처리
+			-->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<!-- execution, within : 특정 패키지에 담겨있는 클래스를 찾을 때, bean : 스프링 빈 -->
+		<aop:advisor advice-ref="txAdvisor" pointcut="within(kr.or.ddit..service.*)"/>
+	</aop:config>
+	
+</beans>

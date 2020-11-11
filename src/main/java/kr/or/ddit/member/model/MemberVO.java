@@ -3,8 +3,11 @@ package kr.or.ddit.member.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
+@XmlRootElement(name = "memberVO")
 public class MemberVO {
 
 	private String userid;
@@ -37,6 +40,11 @@ public class MemberVO {
 	}
 	public MemberVO(){
 		
+	}
+	
+	public MemberVO(String userid, String usernm) {
+		this.userid = userid;
+		this.usernm = usernm;
 	}
 	
 	public String getUserid() {
