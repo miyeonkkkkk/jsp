@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -44,6 +45,7 @@ public class LoginControllerTest extends WebTestConfig {
 											  .andExpect(status().is(200))
 											  .andExpect(view().name("main"))
 											  .andExpect(model().attributeExists("to_day"));
+		// .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE) : 추가 하게 되면 body 가 해결된다.
 		// andExpect(기대값) : assert 구문과 같다.
 
 	}

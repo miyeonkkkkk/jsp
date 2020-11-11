@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import javax.annotation.Resource;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,6 +26,8 @@ public class JavaSpringScanConfigTest {
 	private BoardServiceI boardService;
 
 	// boardRepository, boardService 스프링 빈이 정상적으로 등록 되었는지 확인
+	
+	//@Ignore
 	@Test
 	public void beanTest() {
 		/***Given : 주어진 상황 기술 ***/

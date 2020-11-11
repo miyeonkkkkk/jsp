@@ -121,7 +121,7 @@ public class MemberController {
 
 //		return "member/member";
 
-		return "tiles.member.memberContent";
+		return "tiles/member/memberContent";
 	}
 
 	@RequestMapping("/getMemberAjax")
@@ -168,7 +168,7 @@ public class MemberController {
 			sos.flush(); // 응답이 안간 부분이 있으면 처리한다.
 			sos.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
@@ -198,7 +198,7 @@ public class MemberController {
 			sos.close();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 	}
@@ -212,7 +212,7 @@ public class MemberController {
 
 //		return "member/memberUpdate";
 		
-		return "tiles.member.memberUpdateContent";
+		return "tiles/member/memberUpdateContent";
 
 	}
 
@@ -244,7 +244,7 @@ public class MemberController {
 			try {
 				file.transferTo(uploadFile);
 			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 
@@ -261,7 +261,7 @@ public class MemberController {
 		} else { // 1건이 아닐 때 : 비정상 - 사용자가 데이터를 다시 입력할 수 있도록 등록페이지로 이동
 //			return "member/memberUpdate";
 			
-			return "tiles.member.memberUpdateContent";
+			return "tiles/member/memberUpdateContent";
 
 		}
 	}
@@ -271,7 +271,7 @@ public class MemberController {
 
 //		return "member/memberRegist";
 
-		return "tiles.member.memberRegistContent";
+		return "tiles/member/memberRegistContent";
 
 	}
 
@@ -283,10 +283,11 @@ public class MemberController {
 //		new MemberVoValidator().validate(memberVo, br);
 
 		// 에러가 발생 했다면(검증 통과 X) -> 사용자 등록 화면으로 이동
+		// 에러 예시 : 사용자의 아이디가 몇글자 이상일때 만족 못하는 경우
 		if (br.hasErrors()) {
 //			return "member/memberRegist";
 
-			return "tiles.member.memberRegistContent";
+			return "tiles/member/memberRegistContent";
 		}
 
 		// MemberVO 객체의 realFilename 속성과 multipartFile의 name속성이 같을 경우
@@ -310,7 +311,7 @@ public class MemberController {
 		try {
 			file.transferTo(uploadFile);
 		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 		memberVo.setRealFilename(realfilename);
@@ -326,7 +327,7 @@ public class MemberController {
 		} else { // 1건이 아닐 때 : 비정상 - 사용자가 데이터를 다시 입력할 수 있도록 등록페이지로 이동
 //			return "member/memberRegist";
 			
-			return "tiles.member.memberRegistContent";
+			return "tiles/member/memberRegistContent";
 		}
 	}
 

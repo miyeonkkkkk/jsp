@@ -64,7 +64,7 @@ public interface MemberDaoI {
 	*
 	* </pre>
 	 */
-	public List<MemberVO> selectAllMemberPage(SqlSession sqlSession,PageVO pageVo);
+	public List<MemberVO> selectAllMemberPage(PageVO pageVo);
 	
 	/**
 	 * 회원의 전체 수
@@ -83,7 +83,7 @@ public interface MemberDaoI {
 	*
 	* </pre>
 	 */
-	public int selectMemberTotalCnt(SqlSession sqlSession);
+	public int selectMemberTotalCnt();
 	
 	/**
 	 * 회원 정보를 등록하는 메서드

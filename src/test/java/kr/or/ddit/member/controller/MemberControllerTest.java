@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ddit.WebTestConfig;
@@ -33,23 +35,59 @@ public class MemberControllerTest extends WebTestConfig {
 	@Test
 	public void viewTest() throws Exception {
 
-		mockmvc.perform(get("/member/memberListPage")).andExpect(status().isOk())
-				.andExpect(view().name("member/memberList"));
+		mockmvc.perform(get("/member/memberListPage")).andExpect(status().isOk()).andExpect(view().name("tiles/member/memberListContent"));
 	}
-
+	
+	@Test
+	public void listAjaxPageTest() throws Exception {
+		
+		mockmvc.perform(get("/member/listAjaxPage")).andExpect(status().isOk()).andExpect(view().name("tiles/member/listAjaxPage"));
+	}
+	
+	@Test
+	public void listAjaxTest() throws Exception {
+		
+		mockmvc.perform(get("/member/listAjax").param("page", "1")
+											   .param("pageSize", "1"))
+								.andExpect(status().isOk()).andExpect(view().name("jsonView"));
+	}
+	
+	@Test
+	public void listAjaxHTMLTest() throws Exception {
+		
+		mockmvc.perform(get("/member/listAjaxHTML").param("page", "1")
+				.param("pageSize", "1"))
+		.andExpect(status().isOk()).andExpect(view().name("member/listAjaxHTML"));
+	}
+	
 	@Test
 	public void getMemberTest() throws Exception {
 		MvcResult result = mockmvc.perform(get("/member/getMember").param("userid", "brown")).andReturn();
 
 		ModelAndView mav = result.getModelAndView();
 
-		assertEquals("member/member", mav.getViewName());
+		assertEquals("tiles/member/memberContent", mav.getViewName());
 	}
+	
+	@Test
+	public void getMemberAjaxTest() throws Exception {
+		
+		mockmvc.perform(get("/member/getMemberAjax"))
+		.andExpect(status().isOk()).andExpect(view().name("tiles/member/memberAjax"));
+	}
+	
+	@Test
+	public void memberAjaxTest() throws Exception {
+		
+		mockmvc.perform(get("/member/memberAjax")
+						.param("userid", "brown"))
+		.andExpect(status().isOk()).andExpect(view().name("member/memberAjaxHTML"));
+	}
+	
 
 	@Test
 	public void getProfileTest() throws Exception {
-		mockmvc.perform(get("/member/profileImg").param("userid", "brown"))
-									.andExpect(status().isOk());
+		mockmvc.perform(get("/member/profileImg").param("userid", "brown")).andExpect(status().isOk());
 	}
 
 	@Test
@@ -60,8 +98,7 @@ public class MemberControllerTest extends WebTestConfig {
 
 	@Test
 	public void memberUpdateGetTest() throws Exception {
-		mockmvc.perform(get("/member/memberUpdate").param("userid", "brown"))
-								.andExpect(status().isOk());
+		mockmvc.perform(get("/member/memberUpdate").param("userid", "brown")).andExpect(status().isOk());
 	}
 
 	@Test
@@ -84,12 +121,33 @@ public class MemberControllerTest extends WebTestConfig {
 									.andExpect(status().is3xxRedirection());
 		
 	}
+	
+	@Test
+	public void memberUpdatePostNoFileNameTest() throws Exception {
+		InputStream is = getClass().getResourceAsStream("/kr/or/ddit/upload/JJ2.png");
+		
+		MockMultipartFile file = new MockMultipartFile("rf", "", "", is);
+		
+		
+		mockmvc.perform(fileUpload("/member/memberUpdate")
+				.file(file)
+				.param("userid", "kmy2")
+				.param("pass", "pass1234")
+				.param("usernm", "유승호_수정")
+				.param("alias", "유호호")
+				.param("addr1", "대전 중구 중앙로 76")
+				.param("addr2", "영민빌딩 404호")
+				.param("zipcode", "34940"))
+		.andExpect(view().name("redirect:/member/getMember?userid=kmy2"))
+		.andExpect(status().is3xxRedirection());
+		
+	}
 
 	@Test
 	public void memberRegistGetTest() throws Exception {
 
 		mockmvc.perform(get("/member/memberRegist")).andExpect(status().isOk())
-				.andExpect(view().name("member/memberRegist"));
+				.andExpect(view().name("tiles/member/memberRegistContent"));
 	}
 
 	@Test
@@ -111,5 +169,5 @@ public class MemberControllerTest extends WebTestConfig {
 				.andExpect(view().name("redirect:/member/memberListPage"))
 				.andExpect(status().is3xxRedirection());
 	}
-
+	
 }

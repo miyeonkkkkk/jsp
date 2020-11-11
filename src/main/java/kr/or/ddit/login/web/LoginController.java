@@ -97,10 +97,10 @@ public class LoginController {
 //	 이때 값을 담는 객체를 스프링 프레임 워크에서는 command 객체라고 한다.
 //	 Model : view 객체에서 응답을 생성할 때 참조할 데이터를 담는 객체
 			// jsp/servlet 기반의 request 역할을 담당
-	@RequestMapping(path = "/process", params = {"userid"})
+	@RequestMapping(path = "/process", params = {"userid"}, method = RequestMethod.POST)
 	public String process(String userid, String pass, MemberVO memberVo,
 							HttpSession session, Model model,
-						  @RequestBody String body,
+						  //@RequestBody String body,
 						  @RequestParam(name = "email", required = false, defaultValue = "brown@line.kr") String user_id) {
 		// Spring 에서는 request, session객체를 인자로 넣어줄수 있다.
 		// application 객체는 안된다.
@@ -110,9 +110,9 @@ public class LoginController {
 //		memberService = new MemberServiceImpl();
 		MemberVO dbMember = memberService.getMember(userid);
 		
-		logger.debug("memberVO : {}", dbMember);
-		logger.debug("user_id : {}", user_id);
-		logger.debug("requestBody: {}", body);
+//		logger.debug("memberVO : {}", dbMember);
+//		logger.debug("user_id : {}", user_id);
+//		logger.debug("requestBody: {}", body);
 		
 		
 		// db에서 조회한 사용자 정보가 존재하면 ==> main.jsp

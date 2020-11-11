@@ -56,10 +56,72 @@ Transaction
 SQL 로그 남기기
 1. log4jdbc.log4j2.properties ==> src/main/resource 복사
 2. logback.xml 파일의 하위 logger 5개를 복사하여 본인 파일에 붙여넣기
+
+=============================================================
+docker run --name dockerOracle 	  -d 			-p 1523:1521 	oracleinanutshell/oracle-xe-11g
+		  	컨테이너 이름 설정		백그라운드 설정	  	포트설정					  	이미지명
+ : 이미지를 실행해서 컨테이너를 만드는 명령  
+ : 포트는 포트포워딩 설정을 해준다. 해당 포트로 요청시 그 포트로 포워딩 한다. => 1521로 요청시 1523으로 포워딩 한다.
  
+docker run --name dockerOracle -d -p 1523:1521 oracleinanutshell/oracle-xe-11g
 
+docker images : 다운받은 이미지를 보는 명령어
+docker ps : 설치된 컨테이너가 나온다.
+docker stop 0dc501 : 해당 컨테이너를 정지시킨다.
+docker ps -a : 정지 된 컨테이너까지 나온다
+docker rm dockerOracle : 해당 컨테이너를 삭제한다.
 
+컨테이너를 한번 생성하면 삭제 후 다시 생성해야 한다.
+ 
+KMY ==> 운영계정
+KMY_DEV ==> 개발자 본인만의 개발 DB
 
+DBA 권한을 통해 계정 생성 : 시스템 계정으로 접속해야 한다.
+
+db 관련 테스트가 어려운 이유 : 테이블의 데이터가 변경이 있어서 => 고정된 상황이 아님.
+=> 테스트 코드를 실행할 때(@Before) 데이터를 초기화 하는 스크립트를 일괄 실행
+=> 데이터의 상태를 항상 일정하게 유지 시킴 
+ 
+오라클에서 데이터를 관리하는 개념
+block(데이터 io의 기본 단위) ->  extent(여러개의 블럭을 모아 둔것 , 공간 할당시 기준이 된다.) 
+ 	-> segment(테이블, 인덱스 등을 모아두는 곳) -> table space(이 모든 것들을 지칭하는 논리적인 개념)
+table space 생성시 설정된 extent에 의해서 데이터가 존재하지 않더라도 공간은 이미 할당 되어져 있다. 그래서 데이터를 삽입 후 지우더라도 기존의 사이즈는 영향을 미치지 않는다.
+
+﻿--table space 생성
+CREATE TABLESPACE TS_KMY_DEV
+DATAFILE 'D:\B_UTIL\4.ORACLE\APP\ORACLE\ORADATA\XE\TS_KMY_DEV.DBF' 
+SIZE 100M -> 기본적인 할당 크기
+AUTOEXTEND ON; -> 데이터 확장시 자동으로 확장시켜주기 위한 옵션
+
+--사용자 추가
+create user KMY_DEV identified by java
+default tablespace TS_KMY_DEV
+temporary tablespace temp -> 해당 테이블을 임시 저장 테이블로 사용하겠다.
+quota unlimited on TS_KMY_DEV -> 해당 테이블 스페이스에 대해서 제한을 두지 않겠다
+quota 0m on system; -> 시스템과 관련된 부분은 건들수 없다.
+
+--접속, 생성권한
+GRANT CONNECT, RESOURCE TO KMY_DEV;
+
+==================================================================================
+- ResourceDatabasePopulator ==> 스크립트 파일을 한번에 실행해주는 클래스(스프링에서 제공)
+- 데이터를 일정하게 유지하게 하는 sql이 담긴 script 파일 (.sql)
+
+TRUNCATE TABLE 테이블명 : 빠르게 데이터를 삭제하고 싶을 때 사용 -> sql로그를 남기지 않기 때문
+
+계정 분리에 대한 방지책
+1. 파일이름을 따로 관리
+2. 없는 테이블을 만들어 에러를 발생시켜 실행을 멈추게 만든다.
+   SELECT * 
+     FROM NOT_EXISTS_IN_PRD;
+
+===================================================================================
+1. memberDao, memberService 모든 메소드에 대해 테스트 코드 작성
+2. controller 테스트 코드는 작성하지 않아도 됨 (시간이 남으면 도전)
+3. 작성된 테스트 코드가 ALL GREEN 이 나오도록 코드 수정
+4. memberDao, memberService 는 커버러지율이 100%에 근접하기
+
+=> mybatis를 구현체를 만들지 않고 인터페이스로만 개발하기
 
 
 

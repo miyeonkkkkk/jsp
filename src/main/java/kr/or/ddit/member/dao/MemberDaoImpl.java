@@ -43,7 +43,7 @@ public class MemberDaoImpl implements MemberDaoI {
 	}
 
 	@Override
-	public List<MemberVO> selectAllMemberPage(SqlSession sqlSession, PageVO pageVo) {
+	public List<MemberVO> selectAllMemberPage(PageVO pageVo) {
 //		 sqlSession 객체를 service에서 생성하여 넘겨 받기 때문에 굳이 변수에 담을 필요가 없다. close할 필요가 없기 때문
 //		List<MemberVO> memList = sqlSession.selectList("member.selectAllMemberPage", pageVo);
 		
@@ -51,7 +51,7 @@ public class MemberDaoImpl implements MemberDaoI {
 	}
 
 	@Override
-	public int selectMemberTotalCnt(SqlSession sqlSession) {
+	public int selectMemberTotalCnt() {
 		return sqlSession.selectOne("member.selectMemberTotalCnt");
 	}
  

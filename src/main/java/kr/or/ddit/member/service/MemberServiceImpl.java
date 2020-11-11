@@ -42,20 +42,20 @@ public class MemberServiceImpl implements MemberServiceI {
 
 		// 하나의 트랜잭션에서 작업하기 위해서 Dao가 아니라 Service에서 생성해야 한다.
 		// Dao에서 생성할 경우 서로 다른 트랜잭션에서 생성됨.
-		SqlSession sqlSession = MybatisUtil.getSqlSession();
+//		SqlSession sqlSession = MybatisUtil.getSqlSession();
 
 		Map<String, Object> map = new HashMap<>();
-		map.put("memberList", memberDao.selectAllMemberPage(sqlSession, pageVo));
+		map.put("memberList", memberDao.selectAllMemberPage(pageVo));
 
 		// 페이지바를 만들기 위한 것
 		// 15건, 페이지 사이즈를 7로 가정했을 때 3개의 페이지가 나와야 한다.
 		// 15/7 = 2.14...올림 ==> 3페이지
-		int totalCnt = memberDao.selectMemberTotalCnt(sqlSession);
+		int totalCnt = memberDao.selectMemberTotalCnt();
 //		int pages = (int)Math.ceil((double)totalCnt/7);
 
 		map.put("totalCnt", totalCnt);
 
-		sqlSession.close();
+//		sqlSession.close();
 		return map;
 	}
 

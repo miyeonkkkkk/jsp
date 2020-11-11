@@ -1,10 +1,16 @@
 package kr.or.ddit;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -14,7 +20,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:kr/or/ddit/config/spring/root-context.xml",
-									"classpath:kr/or/ddit/config/spring/application-context.xml" })
+									"classpath:kr/or/ddit/config/spring/application-context.xml",
+									"classpath:kr/or/ddit/config/spring/datasource-context_dev.xml" })
 @WebAppConfiguration // 스프링 컨테이너를 웹기반에서 동작하는 컨테이너로 생성하는 옵션(@Controller, @RequestMapping)
 public class WebTestConfig {
 
@@ -37,6 +44,9 @@ public class WebTestConfig {
 	private WebApplicationContext wac;
 
 	protected MockMvc mockmvc; // = dispatcherServlet
+	
+	@Resource(name = "dataSource")
+	private DataSource dataSource;
 
 	// @Before(setup()) => @Test => @After(tearDown())
 
@@ -44,6 +54,11 @@ public class WebTestConfig {
 	public void setup() {
 		// MockMvc 생성
 		mockmvc = MockMvcBuilders.webAppContextSetup(wac).build();
+		
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		populator.addScripts(new ClassPathResource("/kr/or/ddit/config/db/initData.sql"));
+		populator.setContinueOnError(false); // 에러가 발생했을 때 테스트를 계속 진행 할거냐 , 스크립트 실행중 에러 발생시 멈춘다.
+		DatabasePopulatorUtils.execute(populator, dataSource);
 	}
 
 	//get(), post() : get/post 요청
