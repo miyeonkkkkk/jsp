@@ -20,23 +20,39 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:kr/or/ddit/config/spring/root-context.xml
-					 classpath:kr/or/ddit/config/spring/aop-context.xml
-					 classpath:kr/or/ddit/config/spring/datasource-context.xml
-					 classpath:kr/or/ddit/config/spring/transaction-context.xml
+		<param-value>kr.or.ddit.config.spring.RootContextJava
+					 kr.or.ddit.config.spring.AopContextJava
+					 kr.or.ddit.config.spring.DataSourceContextJava
+					 kr.or.ddit.config.spring.TransactionContextJava
 		</param-value>
+<!-- 		<param-value> @import 어노테이션 사용시 하나의 파일만 등록하여 가능하다.-->
+<!-- 			kr.or.ddit.config.spring.RootContextJava -->
+<!-- 		</param-value> -->
 	</context-param>
 	
+	<!-- 자바 파일을 읽기 위한 부분 -->
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+
 	<!-- 스프링 자식 컨테이너 생성 : dispatcherServlet(직접 생성 안함)을 통해 생성 : controller -->
 	<servlet>
 		<servlet-name>dispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:kr/or/ddit/config/spring/application-context.xml
-						 classpath:kr/or/ddit/config/spring/interceptor-context.xml
+			<param-value>
+				kr.or.ddit.config.spring.ApplicationContextJava
 			</param-value>
 		</init-param>
+		
+		<!-- 자바 파일을 읽기 위한 부분 -->
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
@@ -83,5 +99,9 @@
 <!--   	<servlet-name>webServlet</servlet-name> -->
 <!--   	<url-pattern>*.do</url-pattern> -->
 <!--   </servlet-mapping> -->
+
+
+
+
 
 </web-app>

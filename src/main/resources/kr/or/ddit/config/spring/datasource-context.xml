@@ -20,14 +20,14 @@
 	</bean>
 	
 	<!-- mybatisUtil 역할 -->
-	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:kr/or/ddit/config/db/mybatis-config.xml"/>
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
 	<!-- sqlSession : 반드시 인자가 있는 형태로 빈을 생성해야 한다. -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlSessionFactoryBean"/>
+		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
 	
 </beans>
