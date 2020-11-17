@@ -8,12 +8,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- kr.or.ddit 패키지 하위의 클래스중 @Controller 어노테이션이 붙은 클래스를 스캔하여 스프링 빈으로 생성 -->
-	<context:component-scan
-		base-package="kr.or.ddit" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-		<context:include-filter type="annotation"
-			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	<context:component-scan base-package="kr.or.ddit" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 	</context:component-scan>
 
 	<context:annotation-config />
@@ -32,7 +29,8 @@
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
-				<value>classpath:kr/or/ddit/config/tiles/tiles-definition.xml
+				<value>
+					classpath:/kr/or/ddit/config/tiles/tiles-definition.xml
 				</value>
 			</list>
 		</property>

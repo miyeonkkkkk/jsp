@@ -20,18 +20,15 @@
 <body>
 <!-- 	header영역	 -->
 	<tiles:insertAttribute name="header"/>
-
 	<div class="container-fluid">
 		<div class="row">
 
 			<div class="col-sm-3 col-md-2 sidebar">
-<!-- 			left영역 -->
+				<!-- left영역 -->
 				<tiles:insertAttribute name="left"/>	
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
 				<tiles:insertAttribute name="content"/>
-				
 			</div>
 		</div>
 	</div>
