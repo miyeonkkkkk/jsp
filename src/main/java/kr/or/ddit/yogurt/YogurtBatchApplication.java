@@ -27,7 +27,7 @@ public class YogurtBatchApplication {
 		
 		try {
 			jobLauncher.run(yogurtJob, new JobParametersBuilder()
-												.addParameter("ym", new JobParameter("202011"))
+												.addParameter("ym", new JobParameter("202002"))
 												.addLong("st_dt", System.currentTimeMillis()).toJobParameters());
 		} catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException
 				| JobParametersInvalidException e) {

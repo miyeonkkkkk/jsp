@@ -21,7 +21,7 @@ public class YogurtProcessor implements ItemProcessor<CycleVO, List<DailyVO>> {
 	// jobLauncher 를 실행하면서 두번째 인자로 넣어준 javParameter 값을 SPEL을 통해 주입
 	// 단, jobParmters에 접근하기 위해서는 해당 스프링 빈의 scope를 step으로 지정해야 한다.
 	@Value("#{jobParameters[ym]}")
-	private String ym = "202011";
+	private String ym;
 	
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
