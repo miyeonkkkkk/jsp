@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- job Repository : db를 사용하지 않는 형식상의 jobRepository -> MapJobRepositoryFactoryBean 을 추가 -->
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean"/>
+	
+	<!-- job launcher : SimpleJobLauncher -->
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+	</bean>
+	
+	<!-- 빈생성 또는 스캔으로 등록가능 -->
+	<bean id="basicReader" class="kr.or.ddit.batch.basic.BasicReader"/>
+	<bean id="basicProcessor" class="kr.or.ddit.batch.basic.BasicProcessor"/>
+	<bean id="basicWriter" class="kr.or.ddit.batch.basic.BasicWriter"/>
+	
+	<!-- step에서 기본적으로 사용하는 트랜잭션 매니저, 이름이 정해져 있다 -> transactionManager => 
+		이미 사용중인 이름이기 때문에 다른 이름을 사용하고 싶을때 
+		기본이름을 사용하지 않을 경우 tasklet transaction-manager 속성에 등록 -->
+	<bean id="reourceLessTX" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
+	
+	<!-- 반복 작업을 하기 위해서 : restartable, allow-start-if-complete 설정해주어야 한다. 
+		스프링 컨테이너 안에서 반복작업
+		스프링 컨테이너가 끝난후 다시 생성하여 반복작업은 상관없음.
+	-->
+	<batch:job id="basicJob" restartable="true">
+		<batch:step id="basicStep" allow-start-if-complete="true">
+			<batch:tasklet transaction-manager="reourceLessTX"> <!-- 이부분에서 추가해준다. -->
+				<batch:chunk reader="basicReader" processor="basicProcessor" writer="basicWriter" 
+							commit-interval="2" />
+							<!-- 1개씩 커밋을 하겠다. -->
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+	
+	
+	<!-- 스케줄 설정 -->
+	<bean id="basicTask" class="kr.or.ddit.batch.basic.BasicBatchTask">
+<!-- 		<property name="jobLauncher" ref="jobLauncher"/> -->
+<!-- 		<property name="basicJob" ref="basicJob"/> -->
+	</bean>
+	
+	<task:scheduler id="tScheduler"/>
+	
+	<task:scheduled-tasks scheduler="tScheduler">
+		<task:scheduled ref="basicTask" method="task" cron="*/3 * * * * *"/>
+	</task:scheduled-tasks>
+	
+	<!-- 어노테이션 처리를 위해 설정 -->
+	<context:annotation-config/>
+
+</beans>
