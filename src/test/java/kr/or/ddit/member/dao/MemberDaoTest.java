@@ -7,11 +7,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import kr.or.ddit.ModelTestConfig;
 import kr.or.ddit.common.model.PageVO;
